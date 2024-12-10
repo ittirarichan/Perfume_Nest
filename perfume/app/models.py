@@ -14,3 +14,5 @@ class Product(models.Model):
 
 class Carousel(models.Model):
     img=models.FileField()
+
+

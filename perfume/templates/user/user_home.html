@@ -10,35 +10,74 @@
     <link rel="stylesheet" href="{% static 'css/user_home.css' %}">
 </head>
 <body>
-
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="javascript:void(0)">SILVER SPORK SOLUTIONS</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="mynavbar">
-            <ul class="navbar-nav me-auto">
-              <li class="nav-item">
-                <a class="nav-link" href="">Home</a>
+  <nav class="navbar navbar-expand-md bg-body-tertiary">
+    <div class="container-xl">
+      <a class="navbar-brand" href="#">
+        <h1>PERFUME NEST</h1>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Category
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Men</a></li>
+              <li><a class="dropdown-item" href="#">Female</a></li>
+              <li>
+                <hr class="dropdown-divider">
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="courses">Courses</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="about">About</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="contact">Contact</a>
-              </li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
             </ul>
-            <form class="d-flex">
-              <input class="form-control me-2" type="text" placeholder="Search">
-              <button class="btn btn-primary" type="button">Search</button>
-            </form>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Dropdown
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link">Another Link</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="logout">Logout</a>
+          </li>
+        </ul>
+        <div class="search-and-icons">
+          <form class="d-flex mb-2 me-2" role="search">
+            <input class="form-control me-2" placeholder="Search for Products, Brands and More" type="search" aria-label="Search">
+          </form>
+          <div class="user-icons d-flex mb-2">
+            <div class="profile"><i class="bi bi-person"></i></div>
+            <div class="wishlist"><i class="bi bi-heart"></i></div>
+            <div class="cart"><i class="bi bi-cart3"></i></div>
           </div>
         </div>
-      </nav>
+        <div class="contact-info d-md-flex">
+          <p>+91-9447824325 | +91-9744642436</p>
+          <p><a href="mailto:">contact@perfumenest.com</a></p>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+
 
 
 
@@ -61,33 +100,5 @@
       </div>
 
 
-
-    
-    <section class="featured-products">
-        <h2>Featured Perfumes</h2>
-        <div class="product-grid">
-            <!-- <div class="product-card">
-                <img src="{% static 'images/perfume_banner1.jpg!bw700' %}" alt="Perfume 1">
-                <h3>Elegant Rose</h3>
-                <a href="/shop/product1" class="product-link">View Details</a>
-            </div> -->
-        </div>
-    </section>
-
-    <section class="about-us">
-        <h2>About Us</h2>
-        <p>At Fragrance Boutique, we curate only the finest perfumes from around the world. Our mission is to offer an exquisite selection that elevates your daily experience with scents that reflect your personality.</p>
-        <a href="/about" class="learn-more-btn">Learn More</a>
-    </section>
-
-    <footer>
-        <div class="footer-content">
-            <p>&copy; 2024 Fragrance Boutique. All rights reserved.</p>
-            <div class="footer-links">
-                <a href="/privacy-policy">Privacy Policy</a>
-                <a href="/terms-of-service">Terms of Service</a>
-            </div>
-        </div>
-    </footer>
 </body>
 </html>

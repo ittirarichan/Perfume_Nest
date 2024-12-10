@@ -55,26 +55,33 @@
     <title>Responsive Login Page</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <div class="image-container">
-            <img src="{% static 'images/perfume_banner1.jpg' %}" alt="Login Image">
-        </div>
-        <form action="#" method="post">
+
+    <div class="login-container">
+        <form action="" class="form-login" method="post">
             {% csrf_token %}
-            <h2>Login</h2>
-            <div class="input-group">
-                <i class="fas fa-user"></i>
-                <input type="text" placeholder="Email or Phone" name="username" required>
-            </div>
-            <div class="input-group">
-                <i class="fas fa-lock"></i>
-                <input type="password" placeholder="Password" name="password"  required>
-            </div>
+            <ul class="login-nav">
+                <li class="login-nav__item active">
+                    <a href="">Sign In</a>
+                </li>
+                <li class="login-nav__item">
+                    <a href="register">Sign Up</a>
+                </li>
+            </ul>
+    
+            <label for="login-input-user" class="login__label">
+                E-mail
+            </label>
+            <input id="login-input-user" class="login__input" type="text" name="username" />
+    
+    
+            <label for="login-input-password" class="login__label">
+                Password
+            </label>
+            <input id="login-input-password" class="login__input" type="password" name="password" />
 
-
+            <div class="warning_msg">
             {% if messages %}
             {% for message in messages %}
             <div class="alert alert-danger alert-dismissible">
@@ -83,20 +90,27 @@
               </div>
               {% endfor %}
             {% endif %}
-
-
-
-            <div class="checkbox-group">
-                <input type="checkbox" id="remember-me">
-                <label for="remember-me">Remember Me</label>
-            </div>
-            <button type="submit">Login</button>
-            <div class="links">
-                <a href="#">Forgot Password?</a>
-                <span> | </span>
-                <a href="register">Register</a>
-            </div>
+        </div>
+    
+            <label for="login-sign-up" class="login__label--checkbox">
+                <input id="login-sign-up" type="checkbox" class="login__input--checkbox" />
+                Keep me Signed in
+            </label>
+            <button class="login__submit" type="submit" >Sign in</button>
         </form>
+        <a href="#" class="login__forgot">Forgot Password?</a>
     </div>
+
+
+
 </body>
 </html>
+
+
+
+
+
+
+
+
+

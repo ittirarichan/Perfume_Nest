@@ -13,7 +13,6 @@ def perfume_login(req):
     if 'user' in req.session:
         return redirect(user_home)
     if req.method=='POST':
-        # print('jgfdt')
         username=req.POST['username']
         password=req.POST['password']
         data=authenticate(username=username,password=password)
@@ -41,11 +40,21 @@ def perfume_shop_logout(req):
 
 def perfume_home(req):
     if 'shop' in req.session:              #checking section status
-        data=Product.objects.all()
-        return render(req,'shop/home.html',{'products':data})
+        if req.method=='POST':
+            file=req.FILES['img']
+            data=Carousel.objects.create(img=file)
+            data.save()
+            return redirect(perfume_home)
+        else:
+            return render(req,'shop/admin_home.html')
     else:
         return redirect(perfume_login)
     
+
+    # data=Product.Carousel.objects.all()[::-1][:3]
+    # delete_data=Carousel.objects.all()[::-1][3:]
+    # if i in delete_data:
+    #     i.delete
 
 
 #--------------------user------------------------
@@ -75,3 +84,74 @@ def user_home(req):
         return redirect(perfume_login)
     
 
+
+
+def add_product(req):
+    if 'shop' in req.session:
+        if req.method=='POST':
+            product_id=req.POST['pid']
+            name=req.POST['name']
+            description=req.POST['description']
+            categories=req.POST['categories']
+            price=req.POST['price']
+            offer_price=req.POST['offer_price']
+            stock=req.POST['stock']
+            file=req.FILES['image']
+            data=Product.objects.create(pid=product_id,name=name,dis=description,cat=categories,
+                                         price=price,offer_price=offer_price,stock=stock,img=file)
+            data.save()
+            return redirect(manage_products)
+        else:
+            return render(req,'shop/add_product.html')
+    else:
+        return redirect(perfume_login)
+    
+
+
+def edit_product(req,pid):
+    if req.method=='POST':
+        product_id=req.POST['pid']
+        name=req.POST['name']
+        description=req.POST['description']
+        categories=req.POST['categories']
+        price=req.POST['price']
+        offer_price=req.POST['offer_price']
+        stock=req.POST['stock']
+        file=req.FILES['image']
+        if file :
+            Product.objects.filter(pk=product_id).update(pid=product_id,name=name,dis=description,cat=categories,
+                                         price=price,offer_price=offer_price,stock=stock,img=file)
+            data=Product.objects.get(pk=pid)
+            data.img=file
+            data.save()
+
+        else:
+            Product.objects.filter(pk=pid).update(pid=product_id,name=name,dis=description,cat=categories,
+                                         price=price,offer_price=offer_price,stock=stock,img=file)
+            return redirect(perfume_home)
+    else:
+        data=Product.objects.get(pk=pid)
+        return render(req,'shop/edit_product.html',{'data':data})
+        
+    
+
+
+def delete_product(req,pid):
+    data=Product.objects.get(pk=pid)
+    file=data.img.url
+    file=file.split('/')[-1]
+    os.remove('media/' + file)
+    data.delete()
+    return redirect(perfume_home)
+
+
+
+def view_users(req):
+    data=User.objects.all()
+    return render(req,'shop/manage_users.html',{'users':data})
+
+
+
+def manage_products(req):
+    data=Product.objects.all()
+    return render(req,'shop/manage_products.html',{'products':data})
