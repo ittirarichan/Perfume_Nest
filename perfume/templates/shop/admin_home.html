@@ -28,31 +28,34 @@
           <!-- <li class="comments"><a href="#">Ads</a></li> -->
           <li class="users"><a href="manage_users">Manage Users</a></li>
           <li class="users"><a href="manage_products">Manage Products</a></li>
+          <li class="users"><a href="">New Arrivals</a></li>
         </ul>
       </nav>
       
       <main role="main">
         
-        <section class="panel ">
+        <section class="panel important">
           <h2>Images</h2>
+          <div style="margin-left: 20px;">
           <form action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             Carousel Image:
             <input type="file" id="img" name="img" accept="image/*">
-            <div>
+            <div class="btn"> 
               <input type="submit" name="submit" value="Save" />
             </div>
           </form>
+        </div>
 
           <div class="container mt-3">
             <div class="row">
                 {% for car in carousel %}
                 <div class="col-lg-4">
-            <div class="card" style="width:400px">
+            <div class="card" style="width:100%">
               <img class="card-img-top" src="{{car.img.url}}" alt="Card image" style="width:100%; height: 35vh;">
               <div class="card-body">
-                <!-- <a href="edit_product/{{pro.pk}}" class="btn btn-primary">Edit</a>
-                <a href="delete_product/{{pro.pk}}" class="btn btn-primary">Delete</a> -->
+                <a href="edit_product/{{pro.pk}}" class="btn btn-primary">Edit</a>
+                <a href="delete_product/{{pro.pk}}" class="btn btn-primary">Delete</a>
               </div>
             </div><br>
             </div>

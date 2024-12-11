@@ -44,17 +44,21 @@ def perfume_home(req):
             file=req.FILES['img']
             data=Carousel.objects.create(img=file)
             data.save()
+            data=Carousel.objects.all()[::-1][:3]
+            delete_data=Carousel.objects.all()[::-1][3:]
+            
+            for i in delete_data:
+                file=i.img.url
+                file=file.split('/')[-1]
+                os.remove('media/' + file)
+                i.delete()
             return redirect(perfume_home)
         else:
-            return render(req,'shop/admin_home.html')
+            data=Carousel.objects.all()[::-1][:3]
+            return render(req,'shop/admin_home.html',{'carousel':data})
     else:
         return redirect(perfume_login)
     
-
-    # data=Product.Carousel.objects.all()[::-1][:3]
-    # delete_data=Carousel.objects.all()[::-1][3:]
-    # if i in delete_data:
-    #     i.delete
 
 
 #--------------------user------------------------

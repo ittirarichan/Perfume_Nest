@@ -110,18 +110,18 @@
           <h2>Add New Products</h2>
             <form action="" method="post" enctype="multipart/form-data" >
                 {% csrf_token %}
-              <div class="twothirds">
+              <div class="twothirds w-100">
                 Product Id:<br/>
                     <input type="text" id="product_id" name="pid" size="40" required/><br/><br/>
                 Product Name:<br/>
                     <input type="text" id="name" name="name" size="40" required /><br/><br/>
                 Description:<br/>    
-                    <textarea id="description" name="description" rows="15" cols="67" required ></textarea><br/><br>
+                    <textarea id="description" name="description" rows="5" required ></textarea><br/><br>
                 Category:<br/>
                 <select id="category" name="categories" required>
                   <option value="Men">Men</option>
                   <option value="Women">Women</option>
-                  <option value="Women">Both</option>
+                  <option value="Women">Unisex</option>
                 </select><br/><br/>
 
                 Price:<br/>
@@ -132,7 +132,7 @@
                 <input type="number" id="stock" name="stock" size="40" required /><br/><br/>
                 Product Image:
                     <input type="file" id="img" name="image" accept="image/*">
-                    <div>
+                    <div class="btn">
                       <input type="submit" name="submit" value="Save" />
                     </div>
                 </div>
