@@ -35,15 +35,16 @@
         
         <!-- Manage Products Section -->
         <div class="section" id="products">
-            <h3>Manage Products</h3>
+          <div class="bt" style="margin-left: 30px; margin-top: 15px; color: red;">
+            <h3>Manage Products</h3><br>
             <button class="add-button"><a href="add_product" class="add-button">Add Product</a></button> 
-
+          </div>
             <div class="container mt-3">
                 <div class="row">
                     {% for pro in products %}
-                    <div class="col-lg-4">
-                <div class="card" style="width:400px">
-                  <img class="card-img-top" src="{{pro.img.url}}" alt="Card image" style="width:100%; height: 35vh;">
+                    <div class="col-lg-3">
+                <div class="card" style="width:100%">
+                  <img class="card-img-top" src="{{pro.img.url}}" alt="Card image" style="width:100%; height: 35vh; object-fit: cover;">
                   <div class="card-body">
                     <h4 class="card-title">{{pro.name}}</h4>
                     <!-- <p class="card-text">{{pro.dis}}</p> -->

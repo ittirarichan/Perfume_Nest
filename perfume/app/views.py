@@ -7,6 +7,9 @@ from django.contrib.auth.models import User
 
 # Create your views here.
 
+#--------------------shop login------------------------
+
+
 def perfume_login(req):
     if 'shop' in req.session:
         return redirect(perfume_home)
@@ -29,6 +32,9 @@ def perfume_login(req):
             return redirect(perfume_login)
     else:
         return render(req,'login.html')
+    
+#--------------------shop logout------------------------
+
 
 def perfume_shop_logout(req):
     logout(req)
@@ -61,7 +67,7 @@ def perfume_home(req):
     
 
 
-#--------------------user------------------------
+#--------------------user reg------------------------
 
 def register(req):
     if req.method=='POST':
@@ -77,7 +83,10 @@ def register(req):
         return redirect(perfume_login)
     else:
         return render(req,'user/register.html')
-    
+
+
+#--------------------admin------------------------
+
 
 def user_home(req):
     if 'user' in req.session:
@@ -90,19 +99,109 @@ def user_home(req):
 
 
 
+
+
+
+
+
+
+
+
+
+
+# --------------add category and display-------------
+
+def add_category(req):
+    if 'shop' in req.session:
+        if req.method == 'POST':
+            c_name = req.POST['cat_name']
+            Category.objects.create(cat_name=c_name.lower())
+            categories = Category.objects.all()
+            return render(req, 'shop/add_category.html', {'categories': categories})
+        else:
+            categories = Category.objects.all()
+            return render(req, 'shop/add_category.html', {'categories': categories})
+    else:
+        return redirect(perfume_login)
+    
+
+
+# ------------------to delete category----------------
+def delete_category(req, id):
+    if 'shop' in req.session:
+        try:
+            category = Category.objects.get(id=id)
+            category.delete()
+        except Category.DoesNotExist:
+            pass  # You can add an error message here if needed
+        return redirect(add_category)
+    else:
+        return redirect(perfume_login)
+
+
+
+# ------------------to add brand ----------------
+
+def add_brand(req):
+    if 'admin' in req.session:
+        if req.method == 'POST':
+            b_name = req.POST['b_name']
+            Brand.objects.create(b_name=b_name.lower())
+            brands = Brand.objects.all()
+            return render(req, 'admin/add_brand.html', {'brands': brands})
+        else:
+            
+            brands = Brand.objects.all()
+            return render(req, 'admin/add_brand.html', {'brands': brands})
+    else:
+        return redirect(log)
+
+# -----------------to delete a brand -----------------
+
+def delete_brand(req, id):
+    if 'admin' in req.session:
+        try:
+            brand = Brand.objects.get(id=id)
+            brand.delete()
+        except Brand.DoesNotExist:
+            pass  
+        return redirect(add_brand)
+    else:
+        return redirect(log)
+    
+
+
+
+
+
+
+
+
+
+    
+
+
+
 def add_product(req):
     if 'shop' in req.session:
         if req.method=='POST':
             product_id=req.POST['pid']
             name=req.POST['name']
             description=req.POST['description']
-            categories=req.POST['categories']
+            gender=req.POST['gender']
             price=req.POST['price']
             offer_price=req.POST['offer_price']
             stock=req.POST['stock']
             file=req.FILES['image']
-            data=Product.objects.create(pid=product_id,name=name,dis=description,cat=categories,
-                                         price=price,offer_price=offer_price,stock=stock,img=file)
+            pro_cat_id = req.POST['pro_cat']  # Get selected category ID (no need to create )
+            pro_bnd_id = req.POST['pro_bnd']  # Get selected brand ID (no need to create )
+
+            # Fetch the related Category and Brand objects
+            pro_cat = Category.objects.get(id=pro_cat_id)
+            pro_bnd = Brand.objects.get(id=pro_bnd_id)
+
+            data=Product.objects.create(pid=product_id,name=name,dis=description,gender=gender.lower(),
+                                        price=price,offer_price=offer_price,stock=stock,img=file,cat_name=pro_cat,bnd_name=pro_bnd)
             data.save()
             return redirect(manage_products)
         else:
@@ -117,28 +216,34 @@ def edit_product(req,pid):
         product_id=req.POST['pid']
         name=req.POST['name']
         description=req.POST['description']
-        categories=req.POST['categories']
+        gender=req.POST['gender']
         price=req.POST['price']
         offer_price=req.POST['offer_price']
         stock=req.POST['stock']
         file=req.FILES['image']
+        pro_cat_id = req.POST['pro_cat']  # Get selected category ID (no need to create )
+        pro_bnd_id = req.POST['pro_bnd']  # Get selected brand ID (no need to create )
+
+        # Fetch the related Category and Brand objects
+        pro_category = Category.objects.get(id=pro_cat_id)
+        pro_brand = Brand.objects.get(id=pro_bnd_id)
+        
+
         if file :
-            Product.objects.filter(pk=product_id).update(pid=product_id,name=name,dis=description,cat=categories,
-                                         price=price,offer_price=offer_price,stock=stock,img=file)
+            Product.objects.filter(pid=product_id,name=name,dis=description,gender=gender.lower(),
+                                        price=price,offer_price=offer_price,stock=stock,img=file,cat_name=pro_category,bnd_name=pro_brand)
             data=Product.objects.get(pk=pid)
             data.img=file
             data.save()
 
         else:
-            Product.objects.filter(pk=pid).update(pid=product_id,name=name,dis=description,cat=categories,
-                                         price=price,offer_price=offer_price,stock=stock,img=file)
+            Product.objects.filter(pk=pid).update(pid=product_id,name=name,dis=description,gender=gender.lower(),
+                                        price=price,offer_price=offer_price,stock=stock,img=file,cat_name=pro_category,bnd_name=pro_brand)
             return redirect(perfume_home)
     else:
         data=Product.objects.get(pk=pid)
         return render(req,'shop/edit_product.html',{'data':data})
-        
     
-
 
 def delete_product(req,pid):
     data=Product.objects.get(pk=pid)
@@ -150,12 +255,21 @@ def delete_product(req,pid):
 
 
 
-def view_users(req):
-    data=User.objects.all()
-    return render(req,'shop/manage_users.html',{'users':data})
+# def view_users(req):
+#     data=User.objects.all()
+#     return render(req,'shop/manage_users.html',{'users':data})
 
 
 
 def manage_products(req):
     data=Product.objects.all()
     return render(req,'shop/manage_products.html',{'products':data})
+
+
+
+
+
+
+
+
+

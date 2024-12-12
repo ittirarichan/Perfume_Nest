@@ -11,7 +11,9 @@ urlpatterns=[
     path('add_product',views.add_product),
     path('edit_product/<pid>',views.edit_product),
     path('delete_product/<pid>',views.delete_product),
-    path('view_users',views.view_users),
-    path('manage_products',views.manage_products)
+    path('add_category',views.add_category),
+    path('manage_products',views.manage_products),
+    path('delete_category/<int:id>/', views.delete_category, name='delete_category'),
+    path('delete_brand/<int:id>/', views.delete_brand, name='delete_brand'),
 
 ]
