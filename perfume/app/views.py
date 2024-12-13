@@ -114,8 +114,8 @@ def user_home(req):
 def add_category(req):
     if 'shop' in req.session:
         if req.method == 'POST':
-            c_name = req.POST['cat_name']
-            Category.objects.create(cat_name=c_name.lower())
+            cat_name = req.POST['cat_name']
+            Category.objects.create(cat_name=cat_name.lower())
             categories = Category.objects.all()
             return render(req, 'shop/add_category.html', {'categories': categories})
         else:
@@ -143,23 +143,23 @@ def delete_category(req, id):
 # ------------------to add brand ----------------
 
 def add_brand(req):
-    if 'admin' in req.session:
+    if 'shop' in req.session:
         if req.method == 'POST':
-            b_name = req.POST['b_name']
-            Brand.objects.create(b_name=b_name.lower())
+            bnd_name = req.POST['bnd_name']
+            Brand.objects.create(bnd_name=bnd_name.lower())
             brands = Brand.objects.all()
-            return render(req, 'admin/add_brand.html', {'brands': brands})
+            return render(req, 'shop/add_brand.html', {'brands': brands})
         else:
             
             brands = Brand.objects.all()
-            return render(req, 'admin/add_brand.html', {'brands': brands})
+            return render(req, 'shop/add_brand.html', {'brands': brands})
     else:
-        return redirect(log)
+        return redirect(perfume_login)
 
 # -----------------to delete a brand -----------------
 
 def delete_brand(req, id):
-    if 'admin' in req.session:
+    if 'shop' in req.session:
         try:
             brand = Brand.objects.get(id=id)
             brand.delete()
@@ -167,18 +167,11 @@ def delete_brand(req, id):
             pass  
         return redirect(add_brand)
     else:
-        return redirect(log)
+        return redirect(perfume_login)
     
 
 
 
-
-
-
-
-
-
-    
 
 
 
@@ -205,7 +198,10 @@ def add_product(req):
             data.save()
             return redirect(manage_products)
         else:
-            return render(req,'shop/add_product.html')
+            # Fetch categories and brands to populate dropdowns
+            categories = Category.objects.all()
+            brands = Brand.objects.all()
+            return render(req,'shop/add_product.html', {'categories': categories, 'brands': brands})
     else:
         return redirect(perfume_login)
     
