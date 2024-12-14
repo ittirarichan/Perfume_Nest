@@ -13,7 +13,7 @@
   <nav class="navbar navbar-expand-md bg-body-tertiary">
     <div class="container-xl">
       <a class="navbar-brand" href="#">
-        <img src="{% static 'images/PERFUME (1).png' %}" alt="">
+        <img src="{% static 'images/PERFUME (2).png' %}" alt="">
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -91,9 +91,9 @@
   
 
 
+<!-- ----------------------------carousel--------------------------------------- -->
 
-
-      <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+<div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
         <div class="carousel-inner">
             {% for car in carousel %}
           <div class="carousel-item active">
@@ -111,10 +111,30 @@
         </button>
       </div>
 
+      <!-- ----------------------------product scroll--------------------------------------- -->
+      <div class="section" id="products">
+        <div class="row">
+          {% for pro in products %}
+          <div class="col-md-4">
+            <a href="view_product/{{pro.pk}}">
+              <div class="card">
+                <img class="card-img-top" src="{{pro.img.url}}" alt="Card image" style="width:100%">
+                <div class="card-body">
+                  <h4 class="card-title">{{pro.name}}</h4>
+                  <!-- <h4 class="card-title">{{pro.offer_price}}</h4> -->
+                  <!-- <h4 class="card-title">{{pro.price}}</h4> -->
+                  <!-- <p class="card-text">{{pro.dis}}</p> -->
+                </div>
+              </div>
+            </a>
+            </div>
+              {% endfor %}
+          </div>
+      </div>
       
 
       
 
 
-</body>
+    </body>
 </html>

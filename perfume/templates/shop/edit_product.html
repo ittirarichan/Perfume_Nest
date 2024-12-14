@@ -22,7 +22,7 @@
       
       <nav role='navigation'>
         <ul class="main">
-            <li class=""><a href="">Dashboard</a></li>
+            <li class=""><a href="../">Dashboard</a></li>
             <li class="edit"><a href="#">Edit Website</a></li>
             <!-- <li class="write"><a href="add_product">Add Product</a></li> -->
             <!-- <li class="comments"><a href="#">Ads</a></li> -->
@@ -108,12 +108,28 @@
                   <input type="text" id="name" name="name" size="40" required value="{{data.name}}" /><br/><br/>
               Description:<br/>    
                   <textarea id="description" name="description" rows="15" cols="67">{{data.dis}}</textarea><br/><br>
-              Category:<br/>
-              <select id="category" name="categories">
-                <option value="Men">Men</option>
-                <option value="Women">Women</option>
-                <option value="Women">Both</option>
-              </select><br/><br/>
+                <!-- Category Dropdown -->
+                <div class="mb-3">
+                    <label for="pro_cat" class="form-label">Category Name</label>
+                    <select class="form-control" id="pro_cat" name="pro_cat" required>
+                        <option value="" disabled selected>Select a Category</option>
+                        {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category.cat_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div><br>
+
+
+                <!-- Brand Dropdown -->
+                <div class="mb-3">
+                    <label for="pro_bnd" class="form-label">Brand Name</label>
+                    <select class="form-control" id="pro_brand" name="pro_bnd" required>
+                        <option value="" disabled selected>Select a Brand</option>
+                        {% for brand in brands %}
+                            <option value="{{ brand.id }}">{{ brand.bnd_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div><br>
 
               Price:<br/>
                   <input type="number" id="price" name="price" size="40" required value="{{data.price}}"/><br/><br/>
