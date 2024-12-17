@@ -112,7 +112,7 @@
                 <div class="mb-3">
                     <label for="pro_cat" class="form-label">Category Name</label>
                     <select class="form-control" id="pro_cat" name="pro_cat" required>
-                        <option value="" disabled selected>Select a Category</option>
+                        <option value="" disabled selected>{{ pro_cat_id }}</option>
                         {% for category in categories %}
                             <option value="{{ category.id }}">{{ category.cat_name }}</option>
                         {% endfor %}

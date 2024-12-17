@@ -1,0 +1,134 @@
+/* Reset default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Body & Layout */
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    line-height: 1.6;
+  }
+  
+  .container {
+    width: 80%;
+    margin: 0 auto;
+    max-width: 1200px;
+  }
+  
+  header {
+    background-color: #333;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+  }
+  
+  header h1 {
+    margin-bottom: 10px;
+  }
+  
+  nav a {
+    margin: 0 15px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  nav a:hover {
+    text-decoration: underline;
+  }
+  
+  /* About Us Section */
+  .about-us {
+    background-color: white;
+    padding: 50px 0;
+  }
+  
+  .about-us h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+  }
+  
+  .about-content {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+  }
+  
+  .mission, .vision, .values {
+    width: 30%;
+  }
+  
+  .mission h3, .vision h3, .values h3 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+  }
+  
+  .values ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  
+  .values li {
+    margin-bottom: 5px;
+  }
+  
+  .history {
+    margin-top: 50px;
+  }
+  
+  .history h3 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+  }
+  
+  .faculty {
+    margin-top: 50px;
+  }
+  
+  .faculty h3 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+  }
+  
+  .faculty-members {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .faculty-member {
+    text-align: center;
+    width: 200px;
+  }
+  
+  .faculty-member img {
+    width: 100%;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+  
+  .faculty-member h4 {
+    margin-bottom: 5px;
+    font-size: 1.1rem;
+  }
+  
+  .faculty-member p {
+    font-size: 0.9rem;
+    color: #555;
+  }
+  
+  /* Footer */
+  footer {
+    background-color: #333;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+  }
+  
+  footer p {
+    font-size: 0.9rem;
+  }
+  

@@ -86,14 +86,14 @@ def register(req):
         return render(req,'user/register.html')
 
 
-#--------------------admin------------------------
 
 
 def user_home(req):
     if 'user' in req.session:
-        data=Product.objects.all()
-        data1=Carousel.objects.all()[::-1][:3]
-        return render (req,'user/user_home.html',{'products':data,'carousel':data1})
+        data1=Carousel.objects.all()[::-1][:3]          #display latest added 8 Carousel
+        categories = Category.objects.all()             #display latest added 8 prodects
+        data2=Product.objects.all()[::-1][:8]           #display latest added 8 prodects
+        return render (req,'user/user_home.html',{'carousel':data1,'product':data2,'categories':categories})
     else:
         return redirect(perfume_login)
     
@@ -101,9 +101,39 @@ def user_home(req):
 
 
 
+def shop_page(req):
+
+        # If no category is selected, show all products
+    products = Product.objects.all()
+    categories = Category.objects.all()
+    # Render the shop page with products and categories
+    return render(req, 'user/shop.html', {'products': products,'categories': categories})
 
 
 
+def shop_category_wise(req):
+        # Retrieve the category ID from the URL parameters
+    cat_id = req.GET.get('category', None)
+
+        # Fetch all categories to display in the navbar
+    categories = Category.objects.all()
+
+            # If a category is selected, filter products by the category ID
+    cat=Category.objects.get(pk=cat_id)
+    products = Product.objects.filter(pro_cat=cat)
+    return render(req, 'user/shop_category_wise.html', {'products': products, 'categories': categories})
+
+
+
+
+
+
+
+
+
+def view_product(req,pid):
+    data=Product.objects.get(pk=pid)
+    return render(req,'user/view_product.html',{'product':data})
 
 
 
@@ -174,38 +204,6 @@ def delete_brand(req, id):
 
 
 
-
-
-# def add_product(req):
-#     if 'shop' in req.session:
-#         if req.method=='POST':
-#             product_id=req.POST['pid']
-#             name=req.POST['name']
-#             description=req.POST['description']
-#             gender=req.POST['gender']
-#             price=req.POST['price']
-#             offer_price=req.POST['offer_price']
-#             stock=req.POST['stock']
-#             file=req.FILES['image']
-#             pro_cat_id = req.POST['pro_cat']  
-#             pro_bnd_id = req.POST['pro_bnd']  
-
-            
-#             pro_cat = Category.objects.get(id=pro_cat_id)
-#             pro_bnd = Brand.objects.get(id=pro_bnd_id)
-
-#             data=Product.objects.create(pid=product_id,name=name,dis=description,gender=gender.lower(),
-#                                         price=price,offer_price=offer_price,stock=stock,img=file,cat_name=pro_cat,bnd_name=pro_bnd)
-#             data.save()
-#             return redirect(manage_products)
-#         else:
-            
-
-#             categories = Category.objects.all()
-#             brands = Brand.objects.all()
-#             return render(req,'shop/add_product.html', {'categories': categories, 'brands': brands})
-#     else:
-#         return redirect(perfume_login)
 
 def add_product(req):
     if 'shop' in req.session:
@@ -306,6 +304,7 @@ def view_users(req):
     return users_data
     # return render(req,'shop/manage_users.html',{'users':data})
 
+
 def user_list_view(req):
     users_data = view_users()
     return render(req, 'manage_users.html', {'users_data': users_data})
@@ -321,6 +320,8 @@ def manage_products(req):
 
 
 
+def contact(req):
+    return render(req,'user/contact.html')
 
-
-
+def about(req):
+    return render(req,'user/about.html')

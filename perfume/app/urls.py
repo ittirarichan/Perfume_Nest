@@ -16,5 +16,10 @@ urlpatterns=[
     path('manage_products',views.manage_products),
     path('delete_category/<int:id>/', views.delete_category, name='delete_category'),
     path('delete_brand/<int:id>/', views.delete_brand, name='delete_brand'),
-
+    path('contact', views.contact),
+    path('about', views.about),
+    path('view_product/<pid>',views.view_product),
+    # path('shop/<pid>',views.shop_page),
+    path('shop/', views.shop_page, name='shop_page'),
+    path('shop_category_wise/<cat_id', views.shop_category_wise, name='shop_category_wise'),
 ]

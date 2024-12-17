@@ -10,9 +10,12 @@
     <link rel="stylesheet" href="{% static 'css/user_home.css' %}">
 </head>
 <body>
+
+  <!------------------ ------------navbar------------------------------- -->
+
   <nav class="navbar navbar-expand-md bg-body-tertiary">
     <div class="container-xl">
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="../">
         <img src="{% static 'images/PERFUME (2).png' %}" alt="">
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,14 +27,10 @@
             <a class="nav-link active" aria-current="page" href="../">HOME</a>
           </li>
 
-
-
-<!-- ----------------------------dropdown--------------------------------------- -->
-
-
+          <!-- ------------dropdown-------------------- -->
 
           <li class="nav-item dropdown">
-            <a class="nav-link " href="{% url 'shop_page' %}" style="display: inline;padding-right: 0px;">
+            <a class="nav-link " href="{% url 'shop_category_wise' %}" style="display: inline;padding-right: 0px;">
               SHOP
             </a>
             <a class="nav-link dropdown-toggle" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="display: inline-block;padding-left: 0px;">
@@ -39,16 +38,13 @@
             </a>
             <ul class="dropdown-menu bg-muted text-light" aria-labelledby="categoryDropdown">
               {% for cat in categories %}
-                  <li><a class="dropdown-item" href="shop">{{ cat.cat_name }}</a></li>
+                  <li><a class="dropdown-item" href="{{ cat.cat_name }}">{{ cat.cat_name }}</a></li>
               {% endfor %}
 
           </ul>
           </li>
 
 
-
-
-          
           <li class="nav-item">
             <a class="nav-link" href="">MEN</a>
           </li>
@@ -84,61 +80,33 @@
         </div>
       </div>
     </div>
-    
   </nav>
+
+  <!-- ----------------------------products--------------------------- -->
+
+
+  <div class="section">
+    <div class="row" style="margin: 0px;">
+      <div class="col-lg-12">
+    <h1>All Products</h1>
   
-
-
-<!-- ----------------------------carousel--------------------------------------- -->
-
-<div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            {% for car in carousel %}
-          <div class="carousel-item active">
-            <img src="{{car.img.url}}" class="d-block w-100" style="height: 550px; object-fit:fill" alt="...">
+      </div>
+      {% for pro in products %}
+      <div class="col-md-3 col-lg-3">
+        <a href="view_product/{{pro.pk}}">
+          <div class="card">
+            <img class="card-img-top" src="{{pro.img.url}}" alt="Card image" style="width: 100%;">
+            <div class="card-body">
+              <h4 class="card-title">{{pro.name}}</h4>
+            </div>
           </div>
+        </a>
+        </div>
+  
           {% endfor %}
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
       </div>
 
-      
-<!-- ----------------------------products--------------------------- -->
+  </div>
 
-
-<div class="section">
-  <div class="row" style="margin: 0px;">
-    <div class="col-lg-12">
-  <h1>New Arrivals</h1>
-
-    </div>
-    {% for pro in product %}
-    <div class="col-md-3 col-lg-3">
-      <a href="view_product/{{pro.pk}}">
-        <div class="card">
-          <img class="card-img-top" src="{{pro.img.url}}" alt="Card image" style="width: 100%;">
-          <div class="card-body">
-            <h4 class="card-title">{{pro.name}}</h4>
-          </div>
-        </div>
-      </a>
-      </div>
-
-        {% endfor %}
-    </div>
-    <div class="d-flex justify-content-center align-items-center" style="margin-top: 20px;">
-      <a href=""><button type="button" class="btn btn-outline-danger" >Show More</button></a>
-    </div>
-</div>
-      
-
-
-    </body>
+</body>
 </html>
