@@ -30,7 +30,7 @@
           <!-- ------------dropdown-------------------- -->
 
           <li class="nav-item dropdown">
-            <a class="nav-link " href="{% url 'shop_category_wise' %}" style="display: inline;padding-right: 0px;">
+            <a class="nav-link " href="{% url 'shop_page' %}" style="display: inline;padding-right: 0px;">
               SHOP
             </a>
             <a class="nav-link dropdown-toggle" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="display: inline-block;padding-left: 0px;">
@@ -38,7 +38,7 @@
             </a>
             <ul class="dropdown-menu bg-muted text-light" aria-labelledby="categoryDropdown">
               {% for cat in categories %}
-                  <li><a class="dropdown-item" href="{{ cat.cat_name }}">{{ cat.cat_name }}</a></li>
+                  <li><a class="dropdown-item" href="../shop_category_wise/{{ cat.pk }}">{{ cat.cat_name }}</a></li>
               {% endfor %}
 
           </ul>

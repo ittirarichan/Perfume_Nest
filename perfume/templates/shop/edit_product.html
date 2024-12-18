@@ -108,11 +108,13 @@
                   <input type="text" id="name" name="name" size="40" required value="{{data.name}}" /><br/><br/>
               Description:<br/>    
                   <textarea id="description" name="description" rows="15" cols="67">{{data.dis}}</textarea><br/><br>
+              gender:<br/>
+                  <input type="text" id="gender" name="gender" size="40" required value="{{data.gender}}" /><br/><br/>
                 <!-- Category Dropdown -->
                 <div class="mb-3">
                     <label for="pro_cat" class="form-label">Category Name</label>
                     <select class="form-control" id="pro_cat" name="pro_cat" required>
-                        <option value="" disabled selected>{{ pro_cat_id }}</option>
+                        <option value="" disabled selected>{{ pro_cat}}</option>
                         {% for category in categories %}
                             <option value="{{ category.id }}">{{ category.cat_name }}</option>
                         {% endfor %}

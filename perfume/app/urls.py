@@ -20,6 +20,7 @@ urlpatterns=[
     path('about', views.about),
     path('view_product/<pid>',views.view_product),
     # path('shop/<pid>',views.shop_page),
-    path('shop/', views.shop_page, name='shop_page'),
-    path('shop_category_wise/<cat_id', views.shop_category_wise, name='shop_category_wise'),
+    path('shop', views.shop_page, name='shop_page'),
+    path('shop_category_wise/<cat_id>', views.shop_category_wise, name='shop_category_wise'),
+    path('men_pro',views.men_pro, name='men_pro')
 ]

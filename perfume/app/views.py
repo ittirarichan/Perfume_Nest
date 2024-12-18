@@ -111,19 +111,17 @@ def shop_page(req):
 
 
 
-def shop_category_wise(req):
-        # Retrieve the category ID from the URL parameters
-    cat_id = req.GET.get('category', None)
-
-        # Fetch all categories to display in the navbar
-    categories = Category.objects.all()
-
-            # If a category is selected, filter products by the category ID
+def shop_category_wise(req,cat_id):
     cat=Category.objects.get(pk=cat_id)
     products = Product.objects.filter(pro_cat=cat)
+    categories=Category.objects.all()
     return render(req, 'user/shop_category_wise.html', {'products': products, 'categories': categories})
 
 
+def men_pro(req):
+    product=Product.objects.filter(gender="men")
+    categories = Category.objects.all()
+    return render(req, 'user/men.html', {'product': product,'categories': categories})
 
 
 
@@ -146,7 +144,7 @@ def add_category(req):
     if 'shop' in req.session:
         if req.method == 'POST':
             cat_name = req.POST['cat_name']
-            Category.objects.create(cat_name=cat_name.lower())
+            Category.objects.create(cat_name=cat_name.upper())
             categories = Category.objects.all()
             return render(req, 'shop/add_category.html', {'categories': categories})
         else:
@@ -177,7 +175,7 @@ def add_brand(req):
     if 'shop' in req.session:
         if req.method == 'POST':
             bnd_name = req.POST['bnd_name']
-            Brand.objects.create(bnd_name=bnd_name.lower())
+            Brand.objects.create(bnd_name=bnd_name.upper())
             brands = Brand.objects.all()
             return render(req, 'shop/add_brand.html', {'brands': brands})
         else:
@@ -224,7 +222,7 @@ def add_product(req):
             pro_bnd = Brand.objects.get(id=pro_bnd_id)
 
 
-            product = Product.objects.create(pid=product_id,name=name,dis=description,gender=gender.lower(),
+            product = Product.objects.create(pid=product_id,name=name,dis=description,gender=gender.upper(),
                                 price=price,offer_price=offer_price,stock=stock,img=file,pro_cat=pro_cat,pro_bnd=pro_bnd)
 
             product.save()  # Save the product object
@@ -261,14 +259,14 @@ def edit_product(req,pid):
         
 
         if file :
-            Product.objects.filter(pid=product_id,name=name,dis=description,gender=gender.lower(),
+            Product.objects.filter(pid=product_id,name=name,dis=description,gender=gender.upper(),
                                 price=price,offer_price=offer_price,stock=stock,img=file,pro_cat=pro_cat,pro_bnd=pro_bnd)
             data=Product.objects.get(pk=pid)
             data.img=file
             data.save()
 
         else:
-            Product.objects.filter(pk=pid).update(pid=product_id,name=name,dis=description,gender=gender.lower(),
+            Product.objects.filter(pk=pid).update(pid=product_id,name=name,dis=description,gender=gender.upper(),
                                 price=price,offer_price=offer_price,stock=stock,img=file,pro_cat=pro_cat,pro_bnd=pro_bnd)
             return redirect(perfume_home)
     else:
