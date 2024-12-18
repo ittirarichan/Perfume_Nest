@@ -121,7 +121,12 @@
                 Description:<br/>    
                     <textarea id="description" name="description" rows="5" required ></textarea><br/><br>
                 Gender (Male/Female/Unisex):<br/>
-                    <input type="text" id="gender" name="gender" size="40" required /><br/>
+                <select id="gender" name="gender" required>
+                    <option value="" disabled selected>Select a Gender</option>
+                    <option value="male">Male</option>
+                    <option value="women">Women</option>
+                    <option value="unisex">Unisex</option>
+                  </select>
                 
                 <!-- Category Dropdown -->
                 <div class="mb-3">

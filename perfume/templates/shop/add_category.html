@@ -110,7 +110,7 @@
     
         
         <section class="panel important">
-          <h2>Add New Category</h2>
+          <h2>Categories</h2>
           <div class="card shadow-lg p-4 my-4 admin-card">
             <h2 class="text-center mb-4">Add New Category</h2>
             <form method="post" enctype="multipart/form-data">
@@ -149,20 +149,16 @@
                         </div>
                     </div>
                 </div>
-                {% endfor %}
-                {% if not categories %}
-                <div class="col-12">
-                    <p class="text-center text-muted">No categories available.</p>
+                    {% endfor %}
+                    {% if not categories %}
+                    <div class="col-12">
+                        <p class="text-center text-muted">No categories available.</p>
+                    </div>
+                    {% endif %}
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                {% endif %}
-            </div>
-        </div>
-        
-
-
-    </div>
-</div>
-
         </section>
       </main>
 </body>

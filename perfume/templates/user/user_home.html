@@ -64,10 +64,23 @@
           <li class="nav-item">
             <a class="nav-link" href="about">ABOUT US</a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link" href="logout">Logout</a>
-          </li>
+          </li> -->
+          <div class="dropdown ms-auto">
+            <button class="btn dropdown" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+              <!-- User Icon (rounded image) -->
+              <img src="{% static 'images/user_icon.png' %}" alt="User" class="rounded-circle" width="30" height="30">
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="userDropdown">
+              <li><a class="dropdown-item" href="user_profile">Profile</a></li>
+              <li><a class="dropdown-item" href="#">Settings</a></li>
+              <li><a class="dropdown-item" href="logout">Logout</a></li>
+            </ul>
+          </div>
         </ul>
+
+        
         <div class="search-and-icons">
           <form class="d-flex mb-2 me-2" role="search">
             <input class="form-control me-2" placeholder="Search for Products, Brands and More" type="search" aria-label="Search">
@@ -84,10 +97,8 @@
         </div>
       </div>
     </div>
-    
   </nav>
   
-
 
 <!-- ----------------------------carousel--------------------------------------- -->
 
@@ -95,7 +106,7 @@
         <div class="carousel-inner">
             {% for car in carousel %}
           <div class="carousel-item active">
-            <img src="{{car.img.url}}" class="d-block w-100" style="height: 550px; object-fit:fill" alt="...">
+            <img src="{{car.img.url}}" class="d-block w-100" style="max-height: 600px; min-height: 250px; object-fit:fill" alt="...">
           </div>
           {% endfor %}
         </div>
@@ -113,31 +124,42 @@
 <!-- ----------------------------products--------------------------- -->
 
 
-<div class="section">
-  <div class="row" style="margin: 0px;">
-    <div class="col-lg-12">
-  <h1>New Arrivals</h1>
-
-    </div>
-    {% for pro in product %}
-    <div class="col-md-3 col-lg-3">
-      <a href="view_product/{{pro.pk}}">
-        <div class="card">
-          <img class="card-img-top" src="{{pro.img.url}}" alt="Card image" style="width: 100%;">
-          <div class="card-body">
-            <h4 class="card-title">{{pro.name}}</h4>
-          </div>
-        </div>
-      </a>
+<div class="container">
+  <div class="section">
+    <div class="row" style="margin: 0px;margin-top: 25px;">
+      <div class="col-12">
+        <h1 style="color: #b98500;">New Arrivals</h1>
       </div>
 
-        {% endfor %}
+      {% for pro in product %}
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+        <a href="view_product/{{pro.pk}}" class="text-decoration-none">
+          <div class="card" style="height: 330px;">
+            <img class="card-img-top" src="{{pro.img.url}}" alt="Card image" style="width: 100%; height: 250px; object-fit: fill;">
+            <div class="card-body">
+              <h4 class="card-text" style="text-align: center;">{{pro.pro_bnd.bnd_name}}</h4>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
     </div>
+
     <div class="d-flex justify-content-center align-items-center" style="margin-top: 20px;">
-      <a href="shop"><button type="button" class="btn btn-outline-danger" >Show More</button></a>
+      <a href="shop" class="text-decoration-none">
+        <button type="button" class="btn btn-outline-danger">Show More</button>
+      </a>
     </div>
+  </div>
 </div>
-      
+
+
+
+
+          <!-- Footer Section (Optional) -->
+    <footer class="text-center py-4 mt-5" style="background-color: #f8f9fa;">
+      <p>&copy; 2024 Perfume Shop | All Rights Reserved</p>
+  </footer>
 
 
     </body>

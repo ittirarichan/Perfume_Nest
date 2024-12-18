@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Commerce User Profile</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/user_profile.css' %}">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-md bg-body-tertiary">
+        <div class="container-xl">
+          <a class="navbar-brand" href="../">
+            <img src="{% static 'images/PERFUME (2).png' %}" alt="logo">
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="../">HOME</a>
+              </li>
+    
+    
+    
+    <!-- ----------------------------dropdown--------------------------------------- -->
+    
+    
+    
+              <li class="nav-item dropdown">
+                <a class="nav-link " href="{% url 'shop_page' %}" style="display: inline;padding-right: 0px;">
+                  SHOP
+                </a>
+                <a class="nav-link dropdown-toggle" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="display: inline-block;padding-left: 0px;">
+              
+                </a>
+                <ul class="dropdown-menu bg-muted text-light" aria-labelledby="categoryDropdown">
+                  {% for cat in categories %}
+                      <li><a class="dropdown-item" href="../shop_category_wise/{{cat.pk}}">{{ cat.cat_name }}</a></li>
+                  {% endfor %}
+    
+              </ul>
+              </li>
+    
+    
+    
+    
+              
+              <li class="nav-item">
+                <a class="nav-link" href="men_pro">MEN</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="">WOMEN</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="">UNISEX</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="contact">CONTACT US</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="about">ABOUT US</a>
+              </li>
+              <!-- <li class="nav-item">
+                <a class="nav-link" href="logout">Logout</a>
+              </li> -->
+              <div class="dropdown ms-auto">
+                <button class="btn dropdown" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                  <!-- User Icon (rounded image) -->
+                  <img src="https://www.freeiconspng.com/uploads/account-profile-user-icon--icon-search-engine-10.png" alt="User" class="rounded-circle" width="30" height="30">
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                  <li><a class="dropdown-item" href="user_profile">Profile</a></li>
+                  <li><a class="dropdown-item" href="#">Settings</a></li>
+                  <li><a class="dropdown-item" href="logout">Logout</a></li>
+                </ul>
+              </div>
+            </ul>
+    
+            
+            <div class="search-and-icons">
+              <form class="d-flex mb-2 me-2" role="search">
+                <input class="form-control me-2" placeholder="Search for Products, Brands and More" type="search" aria-label="Search">
+              </form>
+              <div class="user-icons d-flex mb-2">
+                <div class="profile"><i class="bi bi-person"></i></div>
+                <div class="wishlist"><i class="bi bi-heart"></i></div>
+                <div class="cart"><i class="bi bi-cart3"></i></div>
+              </div>
+            </div>
+            <div class="contact-info d-md-flex">
+              <p>+91-9447824325 | +91-9744642436</p>
+              <p><a href="mailto:">contact@perfumenest.com</a></p>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+  <!-- User Profile Section -->
+  <div class="container mt-5">
+    <div class="profile-header text-center" style="margin-bottom: 20px;">
+      <h2>Your Profile</h2>
+    </div>
+
+    <!-- Profile Info -->
+    <div class="row">
+      <div class="col-md-6">
+        <h4>Personal Information</h4>
+        <ul class="list-group">
+          <li class="list-group-item"><strong>Full Name:</strong> John Doe</li>
+          <li class="list-group-item"><strong>Email:</strong> johndoe@example.com</li>
+          <li class="list-group-item"><strong>Phone Number:</strong> (123) 456-7890</li>
+        </ul>
+        <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#userProfileModal">Edit Profile</button>
+      </div>
+
+      <!-- Shipping Address -->
+      <div class="col-md-6">
+        <h4>Shipping Address</h4>
+        <ul class="list-group">
+          <li class="list-group-item"><strong>Address:</strong> 1234 Main Street, Apt 56</li>
+          <li class="list-group-item"><strong>City:</strong> Springfield</li>
+          <li class="list-group-item"><strong>State:</strong> IL</li>
+          <li class="list-group-item"><strong>Zip Code:</strong> 62701</li>
+        </ul>
+        <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#userProfileModal">Edit Address</button>
+      </div>
+    </div>
+
+    <!-- Order History -->
+    <div class="mt-5">
+      <h4>Order History</h4>
+      <table class="table table-striped order-history-table" style="text-align: center;">
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Order Date</th>
+            <th>Status</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <!-- <td>#1001</td>
+            <td>2024-10-10</td>
+            <td>Shipped</td>
+            <td>$49.99</td> -->
+          </tr>
+          <tr>
+            <!-- <td>#1002</td>
+            <td>2024-09-20</td>
+            <td>Delivered</td>
+            <td>$29.99</td> -->
+          </tr>
+          <tr>
+            <!-- <td>#1003</td>
+            <td>2024-08-15</td>
+            <td>Processing</td>
+            <td>$59.99</td> -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Modal for User Profile -->
+  <div class="modal fade" id="userProfileModal" tabindex="-1" aria-labelledby="userProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="userProfileModalLabel">Edit Profile</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Profile Edit Form -->
+          <form>
+            <div class="mb-3">
+              <label for="inputName" class="form-label">Full Name</label>
+              <input type="text" class="form-control" id="inputName" placeholder="Enter your full name">
+            </div>
+            <div class="mb-3">
+              <label for="inputPhone" class="form-label">Phone Number</label>
+              <input type="tel" class="form-control" id="inputPhone" placeholder="Enter your phone number">
+            </div>
+            <div class="mb-3">
+              <label for="inputEmail" class="form-label">Email address</label>
+              <input type="email" class="form-control" id="inputEmail" placeholder="Enter your email">
+            </div>
+            <div class="mb-3">
+              <label for="inputAddress" class="form-label">Shipping Address</label>
+              <textarea class="form-control" id="inputAddress" rows="3" placeholder="Enter your shipping address"></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="inputCity" class="form-label">City</label>
+              <input type="text" class="form-control" id="inputCity" placeholder="Enter your city">
+            </div>
+            <div class="mb-3">
+              <label for="inputState" class="form-label">State</label>
+              <input type="text" class="form-control" id="inputState" placeholder="Enter your state">
+            </div>
+            <div class="mb-3">
+              <label for="inputZip" class="form-label">Zip Code</label>
+              <input type="text" class="form-control" id="inputZip" placeholder="Enter your zip code">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 JS (for dropdown and modal functionality) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

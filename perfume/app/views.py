@@ -8,6 +8,8 @@ from django.contrib.auth.models import User
 
 # Create your views here.
 
+
+
 #--------------------shop login------------------------
 
 
@@ -33,7 +35,7 @@ def perfume_login(req):
             return redirect(perfume_login)
     else:
         return render(req,'login.html')
-    
+
 #--------------------shop logout------------------------
 
 
@@ -43,7 +45,23 @@ def perfume_shop_logout(req):
     return redirect(perfume_login)
 
 
-#--------------------admin------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+# --------------admin functions starting from here-------------
+
+
+#--------------------admin homepage------------------------
+
 
 def perfume_home(req):
     if 'shop' in req.session:              #checking section status
@@ -68,60 +86,6 @@ def perfume_home(req):
     
 
 
-#--------------------user reg------------------------
-
-def register(req):
-    if req.method=='POST':
-        name=req.POST['name']
-        email=req.POST['email']
-        pswd=req.POST['password']
-        try:
-            data=User.objects.create_user(first_name=name,email=email,username=email,password=pswd)    
-            data.save()
-        except:
-            messages.warning(req, "Username/email already exist.")
-            return redirect(register)
-        return redirect(perfume_login)
-    else:
-        return render(req,'user/register.html')
-
-
-
-
-def user_home(req):
-    if 'user' in req.session:
-        data1=Carousel.objects.all()[::-1][:3]          #display latest added 8 Carousel
-        categories = Category.objects.all()             #display latest added 8 prodects
-        data2=Product.objects.all()[::-1][:8]           #display latest added 8 prodects
-        return render (req,'user/user_home.html',{'carousel':data1,'product':data2,'categories':categories})
-    else:
-        return redirect(perfume_login)
-    
-
-
-
-
-def shop_page(req):
-
-        # If no category is selected, show all products
-    products = Product.objects.all()
-    categories = Category.objects.all()
-    # Render the shop page with products and categories
-    return render(req, 'user/shop.html', {'products': products,'categories': categories})
-
-
-
-def shop_category_wise(req,cat_id):
-    cat=Category.objects.get(pk=cat_id)
-    products = Product.objects.filter(pro_cat=cat)
-    categories=Category.objects.all()
-    return render(req, 'user/shop_category_wise.html', {'products': products, 'categories': categories})
-
-
-def men_pro(req):
-    product=Product.objects.filter(gender="men")
-    categories = Category.objects.all()
-    return render(req, 'user/men.html', {'product': product,'categories': categories})
 
 
 
@@ -129,16 +93,8 @@ def men_pro(req):
 
 
 
-def view_product(req,pid):
-    data=Product.objects.get(pk=pid)
-    return render(req,'user/view_product.html',{'product':data})
+# --------------Add category and display-------------
 
-
-
-
-
-
-# --------------add category and display-------------
 
 def add_category(req):
     if 'shop' in req.session:
@@ -152,10 +108,19 @@ def add_category(req):
             return render(req, 'shop/add_category.html', {'categories': categories})
     else:
         return redirect(perfume_login)
-    
+
+
+
+
+
+
+
+
 
 
 # ------------------to delete category----------------
+
+
 def delete_category(req, id):
     if 'shop' in req.session:
         try:
@@ -169,7 +134,14 @@ def delete_category(req, id):
 
 
 
+
+
+
+
+
+
 # ------------------to add brand ----------------
+
 
 def add_brand(req):
     if 'shop' in req.session:
@@ -185,7 +157,17 @@ def add_brand(req):
     else:
         return redirect(perfume_login)
 
+
+
+
+
+
+
+
+
+
 # -----------------to delete a brand -----------------
+
 
 def delete_brand(req, id):
     if 'shop' in req.session:
@@ -201,6 +183,13 @@ def delete_brand(req, id):
 
 
 
+
+
+
+
+
+
+# --------------Add product-------------
 
 
 def add_product(req):
@@ -237,7 +226,13 @@ def add_product(req):
 
 
 
-    
+
+
+
+
+
+
+# --------------Edit product-------------
 
 
 def edit_product(req,pid):
@@ -276,7 +271,18 @@ def edit_product(req,pid):
         return render(req,'shop/edit_product.html',{'data':data ,'categories': categories, 'brands': brands})
     
 
-def delete_product(req,pid):
+
+
+
+
+
+
+
+
+# --------------delete product-------------
+
+
+def delete_product(pid):
     data=Product.objects.get(pk=pid)
     file=data.img.url
     file=file.split('/')[-1]
@@ -285,6 +291,15 @@ def delete_product(req,pid):
     return redirect(perfume_home)
 
 
+
+
+
+
+
+
+
+
+# --------------view users-------------
 
 def view_users(req):
     users = User.objects.all()
@@ -303,23 +318,183 @@ def view_users(req):
     # return render(req,'shop/manage_users.html',{'users':data})
 
 
+
+
+
+
+
+
+
+
+# --------------view all users-------------
+
+
 def user_list_view(req):
     users_data = view_users()
     return render(req, 'manage_users.html', {'users_data': users_data})
 
 
 
+
+
+
+
+
+
+
+# --------------Manage products-------------------
+
 def manage_products(req):
     data=Product.objects.all()
     return render(req,'shop/manage_products.html',{'products':data})
 
 
+# --------------Admin functions ends here-------------
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+#--------------------user reg------------------------
+
+
+def register(req):
+    if req.method=='POST':
+        name=req.POST['name']
+        email=req.POST['email']
+        pswd=req.POST['password']
+        try:
+            data=User.objects.create_user(first_name=name,email=email,username=email,password=pswd)    
+            data.save()
+        except:
+            messages.warning(req, "Username/email already exist.")
+            return redirect(register)
+        return redirect(perfume_login)
+    else:
+        return render(req,'user/register.html')
+
+
+
+
+
+
+
+
+#--------------------User home------------------------
+
+
+def user_home(req):
+    if 'user' in req.session:
+        data1=Carousel.objects.all()[::-1][:3]          #display latest added 8 Carousel
+        categories = Category.objects.all()             #display latest added 8 prodects
+        data2=Product.objects.all()[::-1][:4]           #display latest added 8 prodects
+        return render (req,'user/user_home.html',{'carousel':data1,'product':data2,'categories':categories})
+    else:
+        return redirect(perfume_login)
+    
+
+
+
+
+
+
+
+
+#--------------------shop page in user (for display all products)------------------------
+
+
+def shop_page(req):
+        # If no category is selected, show all products
+    products = Product.objects.all()
+    categories = Category.objects.all()
+    # Render the shop page with products and categories
+    return render(req, 'user/shop.html', {'products': products,'categories': categories})
+
+
+
+
+
+
+
+
+#--------------------shop Category wise (display products in category wise)------------------------
+
+
+def shop_category_wise(req,cat_id):
+    cat=Category.objects.get(pk=cat_id)
+    products = Product.objects.filter(pro_cat=cat)
+    categories=Category.objects.all()
+    return render(req, 'user/shop_category_wise.html', {'products': products, 'categories': categories})
+
+
+
+
+
+
+
+
+
+
+#--------------------men Products (display all mens products in this page)------------------------
+
+
+def men_pro(req):
+    product=Product.objects.filter(gender="MALE")
+    categories = Category.objects.all()
+    return render(req, 'user/men.html', {'product': product,'categories': categories})
+
+
+
+# def user_profile(req,email):
+#     if 'user' in req.session:
+#         user=User.objects.get(pk=email)
+#         return render (req,'user/user_profile.html')
+#     else:
+#         return redirect(perfume_login)
+
+
+#--------------------View products (display all the details of the product in this page)------------------------
+
+
+def view_product(req,pid):
+    data=Product.objects.get(pk=pid)
+    return render(req,'user/view_product.html',{'product':data})
+
+
+
+
+
+
+
+
+
+
+# --------------contact page-------------
 
 
 def contact(req):
     return render(req,'user/contact.html')
+
+
+
+
+
+
+
+
+
+
+# --------------about page-------------
 
 def about(req):
     return render(req,'user/about.html')
