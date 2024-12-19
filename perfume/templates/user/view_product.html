@@ -78,18 +78,18 @@
                       </div>
                       <p class="text-muted mt-3" style="font-size: 1.1em;">For: {{ product.gender}}</p>
 
-   
+                      
+                      <!-- Call to Action Buttons -->
+                      <div class="d-flex gap-3 mt-4">
+                          <a href="../add_to_cart/{{ product.pk }}" class="btn btn-primary btn-lg w-100 w-sm-auto" style="background-color: gray; border-radius: 1px solid;">Add to Cart</a>
+                          <a href="../pro_buy/{{ product.pk }}" class="btn btn-success btn-lg w-100 w-sm-auto" style="background-color: rgb(239, 155, 0);">Buy Now </a>
+                      </div>
                       
                       <!-- Product Description (Optional) -->
                         <p class="text-muted mt-3" style="font-size: 1.1em;"><h6>Description:</h6> {{ product.dis}}</p>
                         
                         
                       
-                        <!-- Call to Action Buttons -->
-                        <div class="d-flex gap-3 mt-4">
-                            <a href="../add_to_cart/{{ product.pk }}" class="btn btn-primary btn-lg w-100 w-sm-auto">Add to Cart</a>
-                            <a href="../pro_buy/{{ product.pk }}" class="btn btn-success btn-lg w-100 w-sm-auto">Buy Now </a>
-                        </div>
                     </div>
                 </div>
             </div>

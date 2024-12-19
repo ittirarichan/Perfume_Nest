@@ -349,7 +349,7 @@ def manage_products(req):
     return render(req,'shop/manage_products.html',{'products':data})
 
 
-# --------------Admin functions ends here-------------
+# ---------------------------------------------------Admin functions ends here------------------------------------------------------------
 
 
 
@@ -364,6 +364,7 @@ def manage_products(req):
 
 
 
+# ---------------------------------------------------user functions starting from here------------------------------------------------------------
 
 #--------------------user reg------------------------
 
@@ -455,12 +456,21 @@ def men_pro(req):
 
 
 
-# def user_profile(req,email):
-#     if 'user' in req.session:
-#         user=User.objects.get(pk=email)
-#         return render (req,'user/user_profile.html')
-#     else:
-#         return redirect(perfume_login)
+
+
+
+
+
+
+
+#--------------------user profile (in user page)------------------------
+
+
+def user_profile(req):
+    if 'user' in req.session:
+        return render (req,'user/user_profile.html')
+    else:
+        return redirect(perfume_login)
 
 
 #--------------------View products (display all the details of the product in this page)------------------------
