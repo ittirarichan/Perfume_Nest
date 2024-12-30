@@ -23,6 +23,16 @@ urlpatterns=[
     path('shop', views.shop_page, name='shop_page'),
     path('shop_category_wise/<cat_id>', views.shop_category_wise, name='shop_category_wise'),
     path('men_pro',views.men_pro, name='men_pro'),
-    path('user_profile',views.user_profile)
+    path('user_profile',views.user_profile),
+
+
+    path('add_to_cart/<pid>',views.add_to_cart),
+    path('view_cart',views.view_cart),
+    path("qty_inc/<cid>",views.qty_inc),
+    path("qty_dec/<cid>",views.qty_dec),
+    path("remove_cart/<cid>",views.remove_cart),
+    path('cart_pro_buy/<cid>',views.cart_pro_buy),
+    path('bookings',views.bookings),
+    path('pro_buy/<pid>',views.pro_buy),
 
 ]

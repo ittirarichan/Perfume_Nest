@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+  <!-- Cart Content -->
+  <div class="container my-5">
+    <h2 class="mb-4">Your Shopping Cart</h2>
+    <div class="row">
+      {% for i in cart %}
+      <div class="col-12 cart-item" id="cart-item-{{i.product.id}}">
+        <div class="d-flex align-items-center">
+          <!-- Product Image -->
+          <img src="{{ i.product.img.url }}" alt="{{ i.product.name }}">
+          
+          <!-- Product Details -->
+          <div class="cart-item-details">
+            <h5>{{ i.product.name }}</h5>
+            <p>${{ i.product.offer_price }}</p>
+            <a href="qty_dec/{{i.pk}}"><button class="btn btn-outline-secondary">-</button></a>
+            <span id="qty-{{ i.product.id }}">{{ i.qty }}</span>
+            <a href="qty_inc/{{i.pk}}"><button class="btn btn-outline-secondary">+</button></a>
+            <a href="remove_cart/{{i.pk}}"><button class="remove-item-btn">Remove</button></a><br>
+            <a href="cart_pro_buy/{{i.pk}}"><button class="btn btn-primary buy-item-btn ">Buy</button></a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div></body>
+</html>
