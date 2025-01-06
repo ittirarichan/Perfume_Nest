@@ -11,49 +11,96 @@
 </head>
 <body>
 
-    <!-- Navbar Section -->
-    <nav class="navbar navbar-expand-md bg-body-tertiary">
-        <div class="container-xl">
-            <a class="navbar-brand" href="#">
-                <img src="{% static 'images/PERFUME (2).png' %}" alt="Perfume Shop">
+  <!-- -----------------------------nav--------------------------- -->
+  <nav class="navbar navbar-expand-md bg-body-tertiary">
+    <div class="container-xl">
+      <a class="navbar-brand" href="../">
+        <img src="{% static 'images/PERFUME (2).png' %}" alt="logo">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="../">HOME</a>
+          </li>
+
+
+
+<!-- ----------------------------dropdown--------------------------------------- -->
+
+
+
+          <li class="nav-item dropdown">
+            <a class="nav-link " href="{% url 'shop_page' %}" style="display: inline;padding-right: 0px;">
+              SHOP
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+            <a class="nav-link dropdown-toggle" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="display: inline-block;padding-left: 0px;">
+          
+            </a>
+            <ul class="dropdown-menu bg-muted text-light" aria-labelledby="categoryDropdown">
+              {% for cat in categories %}
+                  <li><a class="dropdown-item" href="../shop_category_wise/{{cat.pk}}">{{ cat.cat_name }}</a></li>
+              {% endfor %}
+
+          </ul>
+          </li>
+
+
+
+
+          
+          <li class="nav-item">
+            <a class="nav-link" href="men_pro">MEN</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="women_pro">WOMEN</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="unisex_pro">UNISEX</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contact">CONTACT US</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about">ABOUT US</a>
+          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="logout">Logout</a>
+          </li> -->
+          <div class="dropdown ms-auto">
+            <button class="btn dropdown" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+              <!-- User Icon (rounded image) -->
+              <img src="{% static 'images/user_icon.png' %}" alt="User" class="rounded-circle" width="30" height="30">
             </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link active" href="../">HOME</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">SHOP</a>
-                        <ul class="dropdown-menu">
-                            {% for cat in categories %}
-                            <li><a class="dropdown-item" href="#">{{ cat.cat_name }}</a></li>
-                            {% endfor %}
-                            {% if not categories %}
-                            <li><a class="dropdown-item" href="#">No categories available</a></li>
-                            {% endif %}
-                        </ul>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="">MEN</a></li>
-                    <li class="nav-item"><a class="nav-link" href="">WOMEN</a></li>
-                    <li class="nav-item"><a class="nav-link" href="">UNISEX</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contact">CONTACT US</a></li>
-                    <li class="nav-item"><a class="nav-link" href="about">ABOUT US</a></li>
-                    <li class="nav-item"><a class="nav-link" href="logout">Logout</a></li>
-                </ul>
-                <div class="search-and-icons d-flex mb-2">
-                    <form class="d-flex mb-2 me-2" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search for Products, Brands and More" aria-label="Search">
-                    </form>
-                    <div class="user-icons d-flex mb-2">
-                        <div class="profile"><i class="bi bi-person"></i></div>
-                        <div class="wishlist"><i class="bi bi-heart"></i></div>
-                        <div class="cart"><i class="bi bi-cart3"></i></div>
-                    </div>
-                </div>
-            </div>
+            <ul class="dropdown-menu" aria-labelledby="userDropdown">
+              <li><a class="dropdown-item" href="user_profile">Profile</a></li>
+              <li><a class="dropdown-item" href="booking">Shopping</a></li>
+              <li><a class="dropdown-item" href="view_cart">Cart</a></li>
+              <li><a class="dropdown-item" href="logout">Logout</a></li>
+            </ul>
+          </div>
+        </ul>
+
+        
+        <div class="search-and-icons">
+          <form class="d-flex mb-2 me-2" role="search">
+            <input class="form-control me-2" placeholder="Search for Products, Brands and More" type="search" aria-label="Search">
+          </form>
+          <div class="user-icons d-flex mb-2">
+            <div class="profile"><i class="bi bi-person"></i></div>
+            <div class="wishlist"><i class="bi bi-heart"></i></div>
+            <div class="cart"><i class="bi bi-cart3"></i></div>
+          </div>
         </div>
-    </nav>
+        <div class="contact-info d-md-flex">
+          <p>+91-9447824325 | +91-9744642436</p>
+          <p><a href="mailto:">contact@perfumenest.com</a></p>
+        </div>
+      </div>
+    </div>
+  </nav>
 
     <!-- Product Details Section -->
     <div class="container py-5">
@@ -82,7 +129,7 @@
                       <!-- Call to Action Buttons -->
                       <div class="d-flex gap-3 mt-4">
                           <a href="../add_to_cart/{{ product.pk }}" class="btn btn-primary btn-lg w-100 w-sm-auto" style="background-color: gray; border-radius: 1px solid;">Add to Cart</a>
-                          <a href="../pro_buy/{{ product.pk }}" class="btn btn-success btn-lg w-100 w-sm-auto" style="background-color: rgb(239, 155, 0);">Buy Now </a>
+                          <a href="../order/{{ product.pk }}" class="btn btn-success btn-lg w-100 w-sm-auto" style="background-color: rgb(239, 155, 0);">Buy Now </a>
                       </div>
                       
                       <!-- Product Description (Optional) -->
@@ -95,11 +142,103 @@
             </div>
         </div>
     </div>
+  <!-- Feedback Form -->
+  <div class="feedback-container">
+    <h2 class="feedback-title">Share Your Feedback</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label class="form-label" for="message">Your Message</label>
+            <textarea 
+                class="form-control" 
+                id="message" 
+                name="message" 
+                rows="4" 
+                placeholder="Tell us what you think..."
+                required
+            ></textarea>
+        </div>
 
-    <!-- Footer Section (Optional) -->
-    <footer class="text-center py-4 mt-5" style="background-color: #f8f9fa;">
-        <p>&copy; 2024 Perfume Shop | All Rights Reserved</p>
-    </footer>
+        <div class="form-group">
+            <label class="form-label">Rating</label>
+            <div class="star-rating">
+                <input type="radio" name="rating" id="star5" value="5">
+                <label for="star5" title="5 stars">★</label>
+                
+                <input type="radio" name="rating" id="star4" value="4">
+                <label for="star4" title="4 stars">★</label>
+                
+                <input type="radio" name="rating" id="star3" value="3">
+                <label for="star3" title="3 stars">★</label>
+                
+                <input type="radio" name="rating" id="star2" value="2">
+                <label for="star2" title="2 stars">★</label>
+                
+                <input type="radio" name="rating" id="star1" value="1">
+                <label for="star1" title="1 star">★</label>
+            </div>
+        </div>
+
+        <button type="submit" class="submit-btn">
+            Submit Feedback
+        </button>
+    </form>
+</div>
+
+
+
+
+<div class="review-summary">
+    <h4>Customer Reviews</h4>
+    <div class="d-flex align-items-center gap-2 mb-4">
+        <div class="stars">
+            {% for i in "12345"|make_list %}
+                {% if forloop.counter <= avg_rating %}
+                    <span class="text-warning">★</span>
+                {% else %}
+                    <span class="text-muted">★</span>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <span class="text-muted">({{ avg_rating|default:0 }} out of 5 - {{ total_reviews|default:0 }} reviews)</span>
+    </div>
+
+    <!-- Display Reviews -->
+    <div class="reviews-container">
+        {% if feedbacks %}
+            {% for feedback in feedbacks %}
+                <div class="review-card p-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div class="user-info">
+                            <strong>{{ feedback.user.username }}</strong>
+                            <span class="text-muted ms-2">{{ feedback.created_at|date:"F d, Y" }}</span>
+                        </div>
+                        <div class="rating">
+                            {% for i in "12345"|make_list %}
+                                {% if forloop.counter <= feedback.rating %}
+                                    <span class="text-warning">★</span>
+                                {% else %}
+                                    <span class="text-muted">★</span>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <p class="review-message mb-0">{{ feedback.message }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-muted text-center">No reviews yet. Be the first to review this product!</p>
+        {% endif %}
+    </div>
+</div>
+
+
+
+          <!-- Footer Section (Optional) -->
+          <footer class="text-center py-4 mt-5" style="background-color: #f8f9fa;">
+            <p> Copyright &copy; 2024 by @abhishekbinish | All Rights Reserved</p>
+        </footer>
     
 </body>
 </html>

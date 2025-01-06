@@ -12,6 +12,7 @@
 <body>
   <link rel="stylesheet" href="{% static 'css/cart.css' %}">
   <!-- Header / Navbar -->
+  <!-- -----------------------------nav--------------------------- -->
   <nav class="navbar navbar-expand-md bg-body-tertiary">
     <div class="container-xl">
       <a class="navbar-brand" href="../">
@@ -55,10 +56,10 @@
             <a class="nav-link" href="men_pro">MEN</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="">WOMEN</a>
+            <a class="nav-link" href="women_pro">WOMEN</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="">UNISEX</a>
+            <a class="nav-link" href="unisex_pro">UNISEX</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="contact">CONTACT US</a>
@@ -76,7 +77,8 @@
             </button>
             <ul class="dropdown-menu" aria-labelledby="userDropdown">
               <li><a class="dropdown-item" href="user_profile">Profile</a></li>
-              <li><a class="dropdown-item" href="#">Settings</a></li>
+              <li><a class="dropdown-item" href="booking">Shopping</a></li>
+              <li><a class="dropdown-item" href="view_cart">Cart</a></li>
               <li><a class="dropdown-item" href="logout">Logout</a></li>
             </ul>
           </div>
@@ -118,8 +120,9 @@
             <a href="qty_dec/{{i.pk}}"><button class="btn btn-outline-secondary">-</button></a>
             <span id="qty-{{ i.product.id }}">{{ i.qty }}</span>
             <a href="qty_inc/{{i.pk}}"><button class="btn btn-outline-secondary">+</button></a>
-            <a href="remove_cart/{{i.pk}}"><button class="remove-item-btn">Remove</button></a><br>
-            <a href="cart_pro_buy/{{i.pk}}"><button class="btn btn-primary buy-item-btn ">Buy</button></a>
+            <a href="remove_cart/{{i.pk}}"><button class="remove-item-btn">Remove</button></a><br><br>
+            <a href="pro_buy/{{i.product.pk}}" class="btn btn-primary">Buy</a>
+
           </div>
         </div>
       </div>
@@ -134,22 +137,9 @@
     </div>
   </div> -->
 
-  <!-- Footer -->
-  <footer class="bg-dark text-white py-4 fixed-bottom">
-    <div class="container">
-      <div class="row">
-        <!-- Footer Left Section (Copyright) -->
-        <div class="col-12 col-md-6 text-center text-md-start">
-          <p class="mb-0">&copy; 2024 Your Company. All rights reserved.</p>
-        </div>
-        <!-- Footer Right Section (Social Media Links) -->
-        <div class="col-12 col-md-6 text-center text-md-end">
-          <a href="#" class="text-white me-3">Facebook</a>
-          <a href="#" class="text-white me-3">Twitter</a>
-          <a href="#" class="text-white me-3">Instagram</a>
-        </div>
-      </div>
-    </div>
-  </footer>
+          <!-- Footer Section (Optional) -->
+          <footer class="text-center py-4 mt-5" style="background-color: #f8f9fa;">
+            <p> Copyright &copy; 2024 by @abhishekbinish | All Rights Reserved</p>
+        </footer>
 </body>
 </html>

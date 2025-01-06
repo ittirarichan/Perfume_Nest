@@ -23,6 +23,8 @@ urlpatterns=[
     path('shop', views.shop_page, name='shop_page'),
     path('shop_category_wise/<cat_id>', views.shop_category_wise, name='shop_category_wise'),
     path('men_pro',views.men_pro, name='men_pro'),
+    path('women_pro',views.women_pro, name='women_pro'),
+    path('unisex_pro',views.unisex_pro, name='unisex_pro'),
     path('user_profile',views.user_profile),
 
 
@@ -31,8 +33,20 @@ urlpatterns=[
     path("qty_inc/<cid>",views.qty_inc),
     path("qty_dec/<cid>",views.qty_dec),
     path("remove_cart/<cid>",views.remove_cart),
-    path('cart_pro_buy/<cid>',views.cart_pro_buy),
-    path('bookings',views.bookings),
-    path('pro_buy/<pid>',views.pro_buy),
+    # path('cart_pro_buy/<cid>',views.cart_pro_buy),
+    path('booking',views.bookings),
+    # path('pro_buy/<pid>',views.pro_buy),
+    path('order/<pid>',views.order),
+    # path('pay/<pid>', views.payment_methods, name='pay'),
+    # path('buy_details/<int:cat_id>/', views.buy_details),
+
+    # path('search', views.search, name='search'),
+    # path('search_product', views.search_product, name='search_product'),
+    # path('search_category', views.search_category, name='search_category'),
+    # path('search_brand', views.search_brand, name='search_brand'),
+    # path('search_price', views.search_price, name='search_price'),
+
+
+
 
 ]

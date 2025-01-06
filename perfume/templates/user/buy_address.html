@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy Product</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        
+        .product-image {
+            transition: transform 0.3s ease;
+        }
+        
+        .product-image:hover {
+            transform: scale(1.02);
+        }
+        
+        .sticky-header {
+            backdrop-filter: blur(8px);
+            background-color: rgba(255, 255, 255, 0.95);
+        }
+        
+        .btn-primary {
+            background-color: #4f46e5;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: #4338ca;
+            transform: translateY(-1px);
+        }
+        
+        .input-field {
+            transition: border-color 0.2s ease;
+        }
+        
+        .input-field:focus {
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1);
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: #e5e7eb;
+            position: relative;
+            margin: 2rem 0;
+            border-radius: 2px;
+        }
+        
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            height: 100%;
+            width: 50%;
+            background: #4f46e5;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+  <!-- -----------------------------nav--------------------------- -->
+  <nav class="navbar navbar-expand-md bg-body-tertiary">
+    <div class="container-xl">
+      <a class="navbar-brand" href="../">
+        <img src="{% static 'images/PERFUME (2).png' %}" alt="logo">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="../">HOME</a>
+          </li>
+
+
+
+<!-- ----------------------------dropdown--------------------------------------- -->
+
+
+
+          <li class="nav-item dropdown">
+            <a class="nav-link " href="{% url 'shop_page' %}" style="display: inline;padding-right: 0px;">
+              SHOP
+            </a>
+            <a class="nav-link dropdown-toggle" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="display: inline-block;padding-left: 0px;">
+          
+            </a>
+            <ul class="dropdown-menu bg-muted text-light" aria-labelledby="categoryDropdown">
+              {% for cat in categories %}
+                  <li><a class="dropdown-item" href="../shop_category_wise/{{cat.pk}}">{{ cat.cat_name }}</a></li>
+              {% endfor %}
+
+          </ul>
+          </li>
+
+
+
+
+          
+          <li class="nav-item">
+            <a class="nav-link" href="men_pro">MEN</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="women_pro">WOMEN</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="unisex_pro">UNISEX</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contact">CONTACT US</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about">ABOUT US</a>
+          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="logout">Logout</a>
+          </li> -->
+          <div class="dropdown ms-auto">
+            <button class="btn dropdown" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+              <!-- User Icon (rounded image) -->
+              <img src="{% static 'images/user_icon.png' %}" alt="User" class="rounded-circle" width="30" height="30">
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="userDropdown">
+              <li><a class="dropdown-item" href="user_profile">Profile</a></li>
+              <li><a class="dropdown-item" href="booking">Shopping</a></li>
+              <li><a class="dropdown-item" href="view_cart">Cart</a></li>
+              <li><a class="dropdown-item" href="logout">Logout</a></li>
+            </ul>
+          </div>
+        </ul>
+
+        
+        <div class="search-and-icons">
+          <form class="d-flex mb-2 me-2" role="search">
+            <input class="form-control me-2" placeholder="Search for Products, Brands and More" type="search" aria-label="Search">
+          </form>
+          <div class="user-icons d-flex mb-2">
+            <div class="profile"><i class="bi bi-person"></i></div>
+            <div class="wishlist"><i class="bi bi-heart"></i></div>
+            <div class="cart"><i class="bi bi-cart3"></i></div>
+          </div>
+        </div>
+        <div class="contact-info d-md-flex">
+          <p>+91-9447824325 | +91-9744642436</p>
+          <p><a href="mailto:">contact@perfumenest.com</a></p>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+
+        <!-- Product Details -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
+            <div class="product-image rounded-2xl overflow-hidden shadow-lg" style="width: 80%; height: 80%; object-fit: cover;">
+                <img src="{{product.img.url}}" alt="pro img" class="object-cover">
+            </div>
+            
+            <div class="space-y-6">
+                <h1 class="text-4xl font-bold text-gray-900">{{ product.pro_bnd.bnd_name }}</h1>
+                <!-- <p class="text-lg text-gray-600">{{ buy.pro_dis }}</p> -->
+                <div class="flex items-baseline space-x-4">
+                    <span class="text-3xl font-bold text-indigo-600">${{ product.offer_price }}</span>
+                    <span class="text-lg text-gray-500 line-through">${{ product.price}}</span>
+                    <span id="qty-{{ i.product.id }}">{{ product.qty }}</span>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Checkout Form -->
+        <div class="bg-white rounded-2xl shadow-lg p-8">
+            <h2 class="text-2xl font-semibold text-gray-900 mb-8">Complete Your Purchases</h2>
+            
+            <form action="" method="POST" class="space-y-8">
+                {% csrf_token %}
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Shipping Information -->
+                    <div class="space-y-6">
+                        <h3 class="text-xl font-medium text-gray-900">Shipping Information</h3>
+                        
+                        <div class="space-y-4">
+                            <!-- <div>
+                                <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                                <input type="text" id="name" name="name" class="input-field mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-0 focus:outline-none p-3" required>
+                            </div>
+
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+                                <input type="email" id="email" name="email" class="input-field mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-0 focus:outline-none p-3" required>
+                            </div> -->
+
+                            <div>
+                                <label for="address" class="block text-sm font-medium text-gray-700">Address</label>
+                                <input type="text" id="address" name="address" value="{{ detail.address }}" class="input-field mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-0 focus:outline-none p-3" required>
+                            </div>
+
+                            <div>
+                                <label for="phone" class="block text-sm font-medium text-gray-700">number</label>
+                                <input type="number" id="number" name="number" value="{{ detail.number }}" class="input-field mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-0 focus:outline-none p-3" required>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label for="state" class="block text-sm font-medium text-gray-700">State</label>
+                                    <input type="text" id="state" name="state" value="{{ detail.state }}" class="input-field mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-0 focus:outline-none p-3" required>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label for="zip" class="block text-sm font-medium text-gray-700">ZIP Code</label>
+                                    <input type="text" id="zip" name="zip" value="{{ detail.pincode }}" class="input-field mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-0 focus:outline-none p-3" required>
+                                </div>
+                                <div>
+                                    <label for="country" class="block text-sm font-medium text-gray-700">Country</label>
+                                    <input type="text" id="country" name="country" value="{{ detail.country }}" class="input-field mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-0 focus:outline-none p-3" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Order Summary -->
+                    <div class="bg-gray-50 p-6 rounded-xl space-y-6">
+                        <h3 class="text-xl font-medium text-gray-900">Order Summary</h3>
+                        
+                        <div class="space-y-4">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">{{ pro.pro_bnd.bnd_name }}</span>
+                                <span class="font-medium">${{ pro.offer_price }}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Shipping</span>
+                                <span class="font-medium">$5.00</span>
+                            </div>
+                            <div class="border-t pt-4">
+                                <div class="flex justify-between">
+                                    <span class="text-lg font-medium">Total</span>
+                                    <span class="text-lg font-bold text-indigo-600">${{ pro.offer_price|add:"5.00" }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <form method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="payment_method">Payment Method</label><br>
+                                <select class="form-control" id="payment_method" name="payment_method" required>
+                                    <option value="">Select a payment method</option>
+                                    <option value="online">Online payment</option>
+                                    <option value="cod">Cash on Delivery</option>
+                                </select>
+                            </div>
+                     
+                        </form> -->
+                        <select class="form-control" id="payment_method" name="payment_method" required>
+                            <option value="">Select a payment method</option>
+                            <option value="online">Online payment</option>
+                            <option value="cod">Cash on Delivery</option>
+                        </select>
+                        <!-- <a class="btn-primary w-full py-4 px-6 text-white font-medium rounded-lg shadow-md hover:shadow-lg" style="margin-left: 300px;" href="../booking{{pro.pk}}">
+                            Purchase
+                        </a> -->
+                        
+                        <button type="submit" class="btn-primary w-full py-4 px-6 text-white font-medium rounded-lg shadow-md hover:shadow-lg">Purchase</button>
+                        
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+          <!-- Footer Section (Optional) -->
+          <footer class="text-center py-4 mt-5" style="background-color: #f8f9fa;">
+            <p> Copyright &copy; 2024 by @abhishekbinish | All Rights Reserved</p>
+        </footer>
+</body>
+</html>

@@ -74,7 +74,8 @@
             </button>
             <ul class="dropdown-menu" aria-labelledby="userDropdown">
               <li><a class="dropdown-item" href="user_profile">Profile</a></li>
-              <li><a class="dropdown-item" href="#">Settings</a></li>
+              <li><a class="dropdown-item" href="booking">Shopping</a></li>
+              <li><a class="dropdown-item" href="view_cart">Cart</a></li>
               <li><a class="dropdown-item" href="logout">Logout</a></li>
             </ul>
           </div>
@@ -135,7 +136,7 @@
       <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
         <a href="view_product/{{pro.pk}}" class="text-decoration-none">
           <div class="card" style="height: 330px;">
-            <img class="card-img-top" src="{{pro.img.url}}" alt="Card image" style="width: 100%; height: 250px; object-fit: fill;">
+            <img class="card-img-top" src="{{pro.img.url}}" alt="Card image" style="width: 100%; height: 250px; object-fit:cover;">
             <div class="card-body">
               <h4 class="card-text" style="text-align: center;">{{pro.pro_bnd.bnd_name}}</h4>
             </div>
@@ -152,13 +153,116 @@
     </div>
   </div>
 </div>
+<!-- ---------------------------------------img------------------------------------- -->
 
+
+<div class="container-fluid" style="margin-top: 25px; padding: 0;">
+  <img src="{% static 'images/inbetween img1.png' %}" alt="inbetween img1" class="img-fluid w-100">
+</div>
+
+
+
+
+<!-- ---------------------------------------mens------------------------------------- -->
+ 
+<div class="container">
+  <div class="section">
+    <div class="row" style="margin: 0px;margin-top: 25px;">
+      <div class="col-12">
+        <h1 style="color: #b98500;">Mens</h1>
+      </div>
+
+      {% for men in productmen %}
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+        <a href="view_product/{{men.pk}}" class="text-decoration-none">
+          <div class="card" style="height: 330px;">
+            <img class="card-img-top" src="{{men.img.url}}" alt="Card image" style="width: 100%; height: 250px; object-fit:cover;">
+            <div class="card-body">
+              <h4 class="card-text" style="text-align: center;">{{men.pro_bnd.bnd_name}}</h4>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="d-flex justify-content-center align-items-center" style="margin-top: 20px;">
+      <!-- <a href="shop" class="text-decoration-none">
+        <button type="button" class="btn btn-outline-danger">Show More</button>
+      </a> -->
+    </div>
+  </div>
+</div>
+
+<!-- ---------------------------------------women------------------------------------- -->
+ 
+<div class="container">
+  <div class="section">
+    <div class="row" style="margin: 0px;margin-top: 25px;">
+      <div class="col-12">
+        <h1 style="color: #b98500;">Womens</h1>
+      </div>
+
+      {% for women in productwomen %}
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+        <a href="view_product/{{women.pk}}" class="text-decoration-none">
+          <div class="card" style="height: 330px;">
+            <img class="card-img-top" src="{{women.img.url}}" alt="Card image" style="width: 100%; height: 250px; object-fit:cover;">
+            <div class="card-body">
+              <h4 class="card-text" style="text-align: center;">{{women.pro_bnd.bnd_name}}</h4>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="d-flex justify-content-center align-items-center" style="margin-top: 20px;">
+      <!-- <a href="shop" class="text-decoration-none">
+        <button type="button" class="btn btn-outline-danger">Show More</button>
+      </a> -->
+    </div>
+  </div>
+</div>
+
+
+
+<!-- ---------------------------------------Unisex------------------------------------- -->
+ 
+<div class="container">
+  <div class="section">
+    <div class="row" style="margin: 0px;margin-top: 25px;">
+      <div class="col-12">
+        <h1 style="color: #b98500;">Unisex</h1>
+      </div>
+
+      {% for unisex in productunisex %}
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+        <a href="view_product/{{unisex.pk}}" class="text-decoration-none">
+          <div class="card" style="height: 330px;">
+            <img class="card-img-top" src="{{unisex.img.url}}" alt="Card image" style="width: 100%; height: 250px; object-fit:cover;">
+            <div class="card-body">
+              <h4 class="card-text" style="text-align: center;">{{unisex.pro_bnd.bnd_name}}</h4>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="d-flex justify-content-center align-items-center" style="margin-top: 20px;">
+      <!-- <a href="shop" class="text-decoration-none">
+        <button type="button" class="btn btn-outline-danger">Show More</button>
+      </a> -->
+    </div>
+  </div>
+</div>
 
 
 
           <!-- Footer Section (Optional) -->
     <footer class="text-center py-4 mt-5" style="background-color: #f8f9fa;">
-      <p>&copy; 2024 Perfume Shop | All Rights Reserved</p>
+      <p> Copyright &copy; 2024 by @abhishekbinish | All Rights Reserved</p>
   </footer>
 
 

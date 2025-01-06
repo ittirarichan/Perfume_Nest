@@ -11,12 +11,11 @@
 </head>
 <body>
 
-  <!------------------ ------------navbar------------------------------- -->
-
+  <!-- -----------------------------nav--------------------------- -->
   <nav class="navbar navbar-expand-md bg-body-tertiary">
     <div class="container-xl">
       <a class="navbar-brand" href="../">
-        <img src="{% static 'images/PERFUME (2).png' %}" alt="">
+        <img src="{% static 'images/PERFUME (2).png' %}" alt="logo">
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -27,7 +26,11 @@
             <a class="nav-link active" aria-current="page" href="../">HOME</a>
           </li>
 
-          <!-- ------------dropdown-------------------- -->
+
+
+<!-- ----------------------------dropdown--------------------------------------- -->
+
+
 
           <li class="nav-item dropdown">
             <a class="nav-link " href="{% url 'shop_page' %}" style="display: inline;padding-right: 0px;">
@@ -38,21 +41,24 @@
             </a>
             <ul class="dropdown-menu bg-muted text-light" aria-labelledby="categoryDropdown">
               {% for cat in categories %}
-                  <li><a class="dropdown-item" href="../shop_category_wise/{{ cat.pk }}">{{ cat.cat_name }}</a></li>
+                  <li><a class="dropdown-item" href="../shop_category_wise/{{cat.pk}}">{{ cat.cat_name }}</a></li>
               {% endfor %}
 
           </ul>
           </li>
 
 
+
+
+          
           <li class="nav-item">
-            <a class="nav-link" href="">MEN</a>
+            <a class="nav-link" href="men_pro">MEN</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="">WOMEN</a>
+            <a class="nav-link" href="women_pro">WOMEN</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="">UNISEX</a>
+            <a class="nav-link" href="unisex_pro">UNISEX</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="contact">CONTACT US</a>
@@ -60,10 +66,24 @@
           <li class="nav-item">
             <a class="nav-link" href="about">ABOUT US</a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link" href="logout">Logout</a>
-          </li>
+          </li> -->
+          <div class="dropdown ms-auto">
+            <button class="btn dropdown" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+              <!-- User Icon (rounded image) -->
+              <img src="{% static 'images/user_icon.png' %}" alt="User" class="rounded-circle" width="30" height="30">
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="userDropdown">
+              <li><a class="dropdown-item" href="user_profile">Profile</a></li>
+              <li><a class="dropdown-item" href="booking">Shopping</a></li>
+              <li><a class="dropdown-item" href="view_cart">Cart</a></li>
+              <li><a class="dropdown-item" href="logout">Logout</a></li>
+            </ul>
+          </div>
         </ul>
+
+        
         <div class="search-and-icons">
           <form class="d-flex mb-2 me-2" role="search">
             <input class="form-control me-2" placeholder="Search for Products, Brands and More" type="search" aria-label="Search">
@@ -115,6 +135,11 @@
     </div>
   </div>
   
+
+            <!-- Footer Section (Optional) -->
+            <footer class="text-center py-4 mt-5" style="background-color: #f8f9fa;">
+              <p> Copyright &copy; 2024 by @abhishekbinish | All Rights Reserved</p>
+          </footer>
 
 </body>
 </html>
