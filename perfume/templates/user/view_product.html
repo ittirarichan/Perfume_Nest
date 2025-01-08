@@ -52,19 +52,19 @@
 
           
           <li class="nav-item">
-            <a class="nav-link" href="men_pro">MEN</a>
+            <a class="nav-link" href="../men_pro">MEN</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="women_pro">WOMEN</a>
+            <a class="nav-link" href="../women_pro">WOMEN</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="unisex_pro">UNISEX</a>
+            <a class="nav-link" href="../unisex_pro">UNISEX</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="contact">CONTACT US</a>
+            <a class="nav-link" href="../contact">CONTACT US</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="about">ABOUT US</a>
+            <a class="nav-link" href="../about">ABOUT US</a>
           </li>
           <!-- <li class="nav-item">
             <a class="nav-link" href="logout">Logout</a>
@@ -75,9 +75,9 @@
               <img src="{% static 'images/user_icon.png' %}" alt="User" class="rounded-circle" width="30" height="30">
             </button>
             <ul class="dropdown-menu" aria-labelledby="userDropdown">
-              <li><a class="dropdown-item" href="user_profile">Profile</a></li>
-              <li><a class="dropdown-item" href="booking">Shopping</a></li>
-              <li><a class="dropdown-item" href="view_cart">Cart</a></li>
+              <li><a class="dropdown-item" href="../user_profile">Profile</a></li>
+              <li><a class="dropdown-item" href="../booking">Shopping</a></li>
+              <li><a class="dropdown-item" href="../view_cart">Cart</a></li>
               <li><a class="dropdown-item" href="logout">Logout</a></li>
             </ul>
           </div>
@@ -110,11 +110,11 @@
                 <div class="row">
                     <!-- Product Image Section -->
                     <div class="col-lg-6 col-md-12 mb-4 mb-lg-0">
-                        <img src="{{product.img.url}}" class="img-fluid rounded shadow" alt="Product Image" style="object-fit: cover; max-height: 500px; width: 100%;">
+                        <img src="{{detail.product.img.url}}" class="img-fluid rounded shadow" alt="Product Image" style="object-fit: cover; max-height: 500px; width: 100%;">
                     </div>
                     <!-- Product Info Section -->
                     <div class="col-lg-6 col-md-12">
-                      <h2 class="font-weight-bold">{{ product.name }}</h2>
+                      <h2 class="font-weight-bold">{{ detail.product }}</h2>
                       
                       <!-- Pricing -->
                       <div class="d-flex align-items-center">
@@ -211,7 +211,7 @@
                 <div class="review-card p-3">
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <div class="user-info">
-                            <strong>{{ feedback.user.username }}</strong>
+                            <strong>{{ feedback.user.first_name }}</strong>
                             <span class="text-muted ms-2">{{ feedback.created_at|date:"F d, Y" }}</span>
                         </div>
                         <div class="rating">

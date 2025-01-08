@@ -26,6 +26,9 @@ urlpatterns=[
     path('women_pro',views.women_pro, name='women_pro'),
     path('unisex_pro',views.unisex_pro, name='unisex_pro'),
     path('user_profile',views.user_profile),
+    path('view_bookings',views.view_bookings),
+    path('view_users',views.view_users),
+    path('view_feedbacks',views.view_feedbacks),
 
 
     path('add_to_cart/<pid>',views.add_to_cart),
@@ -33,10 +36,11 @@ urlpatterns=[
     path("qty_inc/<cid>",views.qty_inc),
     path("qty_dec/<cid>",views.qty_dec),
     path("remove_cart/<cid>",views.remove_cart),
-    # path('cart_pro_buy/<cid>',views.cart_pro_buy),
     path('booking',views.bookings),
-    # path('pro_buy/<pid>',views.pro_buy),
     path('order/<pid>',views.order),
+
+    # path('cart_pro_buy/<cid>',views.cart_pro_buy),
+    # path('pro_buy/<pid>',views.pro_buy),
     # path('pay/<pid>', views.payment_methods, name='pay'),
     # path('buy_details/<int:cat_id>/', views.buy_details),
 

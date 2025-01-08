@@ -79,15 +79,75 @@
     color: #555;
   }
   
-  /* Footer */
-  footer {
-    background-color: #333;
-    color: white;
-    padding: 20px 0;
-    text-align: center;
-  }
-  
-  footer p {
-    font-size: 0.9rem;
-  }
-  
+    .about-us {
+      padding: 60px 0;
+      background-color: #fff;
+      color: #555;
+    }
+    .about-us h3 {
+      font-family: 'Playfair Display', serif;
+      color: #8B5E3C;
+    }
+    .about-us .section-heading {
+      margin-bottom: 40px;
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      color: #8B5E3C;
+    }
+    .about-us .mission, .vision, .values {
+      margin-bottom: 40px;
+    }
+    .about-us img {
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+    }
+    .team-member {
+      text-align: center;
+    }
+    .team-members {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .team-members .team-member {
+      width: 30%;
+      margin-bottom: 20px;
+    }
+    .testimonial {
+      background-color: #f8f8f8;
+      padding: 30px 20px;
+      border-radius: 10px;
+    }
+    .testimonial p {
+      font-style: italic;
+      color: #555;
+    }
+    .testimonial .name {
+      font-weight: bold;
+      color: #8B5E3C;
+    }
+
+    /* Responsive Improvements */
+    @media (max-width: 768px) {
+      .mission, .vision, .values {
+        margin-bottom: 30px;
+      }
+      .team-members .team-member {
+        width: 100%;
+        margin-bottom: 20px;
+      }
+      .about-us .section-heading {
+        font-size: 30px;
+      }
+      .testimonial {
+        padding: 20px 15px;
+      }
+    }
+    /* Medium devices like tablets */
+    @media (max-width: 991px) {
+      .mission, .vision, .values {
+        margin-bottom: 25px;
+      }
+    }

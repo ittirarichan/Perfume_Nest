@@ -322,20 +322,8 @@ def delete_product(pid):
 # --------------view users-------------
 
 def view_users(req):
-    users = User.objects.all()
-    users_data = []
-    for user in users:
-        users_data.append({
-            'username': user.username,
-            'email': user.email,
-            'first_name': user.first_name,
-            'last_name': user.last_name,
-            'date_joined': user.date_joined,    
-            'last_login': user.last_login,
-        })
-
-    return users_data
-    # return render(req,'shop/manage_users.html',{'users':data})
+    user=User.objects.all()
+    return render(req,'shop/manage_users.html',{'user':user})
 
 
 
@@ -355,9 +343,20 @@ def user_list_view(req):
 
 
 
+def view_bookings(req):
+    buy=Buy.objects.all()[::-1]
+    return render( req,'shop/bookings.html',{'booking':buy})
+
+
+def view_feedbacks(req):
+    feed=Feedback.objects.all()[::-1]
+    return render( req,'shop/product_feedbacks.html',{'feed':feed})
 
 
 
+# def enquire(req):
+#     enq=Enquire.objects.all()    
+#     return render(req,'shop/enquire.html' ,{'enquri':enq})
 
 
 
@@ -501,10 +500,52 @@ def unisex_pro(req):
 
 
 def user_profile(req):
+    # Check if 'user' exists in the session (not commented out)
     if 'user' in req.session:
-        return render (req,'user/user_profile.html')
+        # Get the user based on the session username
+        user = User.objects.get(username=req.session['user'])
+
+        # Try to get the user's details from the User_details model
+        try:
+            detail = User_details.objects.get(user=user)
+        except User_details.DoesNotExist:
+            # If no User_details exist, set detail to None
+            detail = None
+
+        if req.method == 'POST':
+            # Get form data from the POST request
+            address = req.POST.get('address')
+            number = req.POST.get('number')
+            pincode = req.POST.get('zip')
+            state = req.POST.get('state')
+            country = req.POST.get('country')
+
+            # If detail already exists, update it
+            if detail:
+                detail.address = address
+                detail.phone = number
+                detail.pincode = pincode
+                detail.state = state
+                detail.country = country
+                detail.save()
+            else:
+                # Otherwise, create a new User_details record
+                User_details.objects.create(
+                    user=user,
+                    address=address,
+                    phone=number,
+                    pincode=pincode,
+                    state=state,
+                    country=country,
+                )
+
+        # After saving, render the profile page with updated details
+        return render(req, 'user/user_profile.html', {'detail': detail})
+
+    # If no 'user' session exists, redirect to the login page
     else:
         return redirect(perfume_login)
+
 
 
 #--------------------View products (display all the details of the product in this page)------------------------
@@ -559,7 +600,12 @@ def add_to_cart(req,pid):
 def view_cart(req):
     user=User.objects.get(username=req.session['user'])
     data=Cart.objects.filter(user=user)
-    return render(req,'user/cart.html',{'cart':data})  
+    for item in data:
+        item.total_price = item.product.price * item.qty
+    cart_total = sum(item.total_price for item in data)
+
+
+    return render(req,'user/cart.html',{'cart':data,'cart_total': cart_total})  
 
 def qty_inc(req,cid):
     data=Cart.objects.get(pk=cid)
@@ -580,16 +626,16 @@ def remove_cart(req,cid):
     data.delete()
     return redirect(view_cart)
 
-def cart_pro_buy(req,cid):
-    cart=Cart.objects.get(pk=cid)
-    product=cart.product
-    user=cart.user
-    qty=cart.qty
-    price=product.offer_price*qty
-    buy=Buy.objects.create(product=product,user=user,qty=qty,price=price)
-    buy.save()
-    # return redirect(bookings)
-    return render(req,'user/buy_address.html',{'buy':buy})   
+# def cart_pro_buy(req,cid):
+#     cart=Cart.objects.get(pk=cid)
+#     product=cart.product
+#     user=cart.user
+#     qty=cart.qty
+#     price=product.offer_price*qty
+#     buy=Buy.objects.create(product=product,user=user,qty=qty,price=price)
+#     buy.save()
+#     # return redirect(bookings)
+#     return render(req,'user/buy_address.html',{'buy':buy})   
 
 
 def pro_buy(req, pid):
@@ -624,14 +670,20 @@ def pro_buy(req, pid):
 #     return render(req, 'user/shopping_history.html', {'bookings': [buy]})
 
 
+def order(req, pid):
+    # Retrieve the logged-in user from session
+    user = User.objects.get(username=req.session['user'])
 
-def order(req,pid):
-    user = User.objects.get(username=req.session['user'])  
-
+    # Attempt to get the user's details, handle the case where user details are not found
     try:
         detail = User_details.objects.get(user=user)
     except User_details.DoesNotExist:
         detail = None
+
+    # Initialize the product variable
+    product = None
+
+    # Handle POST request where user submits order details
     if req.method == 'POST':
         address = req.POST['address']
         number = req.POST['number']
@@ -640,6 +692,7 @@ def order(req,pid):
         country = req.POST['country']
         payment = req.POST.get('payment_method')
 
+        # Update or create the user's address details
         if detail:
             detail.address = address
             detail.phone = number
@@ -648,43 +701,33 @@ def order(req,pid):
             detail.country = country
             detail.save()
         else:
-            User_details.objects.create(
-                user=user,
-                address=address,
-                phone=number,
-                pincode=pincode,
-                state=state,
-                country=country,
-            )
+            # Create new user details if not found
+            User_details.objects.create(user=user, address=address, phone=number, pincode=pincode, state=state, country=country)
+
+        # Retrieve the product the user is ordering
         product = Product.objects.get(pk=pid)
+
+        # Set default quantity as 1
         qty = 1
         price = product.offer_price
-        Buy.objects.create(product=product,user=user,qty=qty,price=price,payment=payment,product_id=pid)
-        
-        # Store data in session to pass to pro_buy
-        # req.session['payment_data'] = {
-        #     'payment_method': payment,
-        #     'product_id': pid,
-        # }
-        return redirect(bookings)
 
-    return render(req, 'user/buy_address.html', {'detail': detail})
+        # Create a new Buy record for the order
+        Buy.objects.create(product=product, user=user, qty=qty, price=price, payment=payment, product_id=pid)
+
+        # Redirect to the bookings page after the order is placed
+        return redirect(bookings)  # Use URL name 'bookings' for the redirect (adjust if needed)
+
+    # Ensure `product` is available if it's not a POST request (e.g., the initial request)
+    if not product:
+        product = Product.objects.get(pk=pid)
+
+    # Render the template with the user details and product information
+    return render(req, 'user/buy_address.html', {'detail': detail, 'buy': product})
 
 
-# def payment_methods(req, pid):
-#     if req.method == 'POST':
-#         payment = req.POST.get('payment_method')
-#         # product = Product.objects.get(pk=pid)
-        
-#         # Store data in session to pass to pro_buy
-#         req.session['payment_data'] = {
-#             'payment_method': payment,
-#             'product_id': pid,
-#         }
-        
-#         return redirect(pro_buy)
-    
-#     return render(req, 'user/payment.html', {'pid': pid})
+
+
+
 
 
 

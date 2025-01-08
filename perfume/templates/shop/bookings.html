@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,12 +24,12 @@
       
       <nav role='navigation'>
         <ul class="main">
-          <li class=""><a href="">Dashboard</a></li>
-          <li class="edit"><a href="#">Edit Website</a></li>
+          <li class=""><a href="../">Dashboard</a></li>
+          <li class="edit"><a href="">Edit Website</a></li>
           <!-- <li class="write"><a href="add_product">Add Product</a></li> -->
           <!-- <li class="comments"><a href="#">Ads</a></li> -->
           <li class="users"><a href="">Edit Images</a></li>
-          <li class="users"><a href="manage_users">Manage Users</a></li>
+          <li class="users"><a href="view_users">Manage Users</a></li>
           <li class="users"><a href="manage_products">Manage Products</a></li>
           <li class="users"><a href="add_category">Add Category</a></li>
           <li class="users"><a href="add_brand">Add Brand</a></li>
@@ -37,35 +39,37 @@
       </nav>
       
       <main role="main">
-
-        <div class="container my-4">
-            <h1 class="text-center">View Users</h1>
-            <!-- Products Table -->
-            <table class="table table-bordered" style=" background: white; border-radius: 15px; padding: 30px;">
+        
+        <div class="container my-4" >
+            <h1 class="text-center">View User Bookings</h1>
+            <!-- Products Table --> 
+            <table class="table table-bordered" style=" background: white; border-radius: 10px; padding: 30px;">
                 <h2 class="section-title" style="color: #0e1527; font-weight: bold;">{{ l.category.Category_name }}</h2>
                 <thead>
                     <tr>
-                        <th>First Name</th>
-                        <th>Email</th>
-                        <th>Last login</th>
-                        <th>Date Joined</th>
+                        <th>User Name</th>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Date</th>
+                        <th>Quantity</th>
+                        <th>payment method</th>
                     </tr>
                 </thead>
-                {% for u in user %}   
                 <tbody>
-                    <tr>
-                        <td>{{ u.first_name }}</td>
-                        <td>{{ u.email }}</td>
-                        <td>{{ u.last_login }}</td>
-                        <td>{{ u.date_joined }}</td>
+                    {% for b in booking %} 
+                    <tr> 
+                        <td>{{b.user.first_name}}</td>
+                        <td>{{ b.product.name }}</td>
+                        <td>{{ b.price }}</td>
+                        <td>{{ b.date }}</td>
+                        <td>{{ b.qty }}</td>
+                        <td>{{ b.payment }}</td>
                     </tr>
+                    {% endfor %}
                 </tbody>
-                {% endfor %}
             </table>
-           
-    
-        </div>
-      
+
+
       </main>
 </body>
 </html>

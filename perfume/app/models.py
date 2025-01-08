@@ -62,3 +62,12 @@ class Feedback(models.Model):
     message = models.TextField()
     rating = models.IntegerField(default=5)  # 1 to 5 rating
     submitted_at = models.DateTimeField(auto_now_add=True)
+
+
+# class Enquire(models.Model):
+#     name=models.TextField()
+#     email=models.EmailField()
+#     subject=models.TextField()
+#     Phone=models.IntegerField()
+#     message=models.TextField()
+#     brand=models.TextField()

@@ -24,48 +24,53 @@
         <ul class="main">
           <li class=""><a href="">Dashboard</a></li>
           <li class="edit"><a href="#">Edit Website</a></li>
-          <!-- <li class="write"><a href="add_product">Add Product</a></li> -->
-          <!-- <li class="comments"><a href="#">Ads</a></li> -->
           <li class="users"><a href="">Edit Images</a></li>
-          <li class="users"><a href="manage_users">Manage Users</a></li>
+          <li class="users"><a href="view_users">Manage Users</a></li>
           <li class="users"><a href="manage_products">Manage Products</a></li>
           <li class="users"><a href="add_category">Add Category</a></li>
           <li class="users"><a href="add_brand">Add Brand</a></li>
           <li class="users"><a href="view_bookings">Manage Bookings</a></li>
-
         </ul>
       </nav>
       
       <main role="main">
-
         <div class="container my-4">
-            <h1 class="text-center">View Users</h1>
-            <!-- Products Table -->
-            <table class="table table-bordered" style=" background: white; border-radius: 15px; padding: 30px;">
-                <h2 class="section-title" style="color: #0e1527; font-weight: bold;">{{ l.category.Category_name }}</h2>
+            <h1 class="text-center">Product Reviews</h1>
+            <!-- Users Table -->
+            <table class="table table-bordered" style="background: white; border-radius: 15px; padding: 30px; width: 95%;">
                 <thead>
                     <tr>
-                        <th>First Name</th>
-                        <th>Email</th>
-                        <th>Last login</th>
-                        <th>Date Joined</th>
+                        <th>User Name</th>
+                        <th>Product Name</th>
+                        <th>Riview</th>
+                        <th>Rating</th>
+                        <th>Product Image</th>  <!-- Added an image column -->
                     </tr>
                 </thead>
-                {% for u in user %}   
                 <tbody>
+                {% for f in feed %}
                     <tr>
-                        <td>{{ u.first_name }}</td>
-                        <td>{{ u.email }}</td>
-                        <td>{{ u.last_login }}</td>
-                        <td>{{ u.date_joined }}</td>
+                        <td>{{ f.user.first_name }}</td>
+                        <td>{{ f.product.name }}</td>
+                        <td>{{ f.message }}</td>  
+                        <td>                        <div class="rating">
+                            {% for i in "12345"|make_list %}
+                                {% if forloop.counter <= f.rating %}
+                                    <span class="text-warning">★</span>
+                                {% else %}
+                                    <span class="text-muted">★</span>
+                                {% endif %}
+                            {% endfor %}
+                        </div></td>
+                        <td style="text-align: center;"><img src="{{ f.product.img.url }}" class="img-fluid rounded shadow" 
+                            alt="User Profile Image" style="max-height: 100px; object-fit: cover;"></td>
                     </tr>
-                </tbody>
                 {% endfor %}
+                </tbody>
             </table>
-           
-    
         </div>
-      
-      </main>
+
+
+    </main>
 </body>
 </html>
