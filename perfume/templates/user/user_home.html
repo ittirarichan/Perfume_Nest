@@ -83,8 +83,9 @@
 
         
         <div class="search-and-icons">
-          <form class="d-flex mb-2 me-2" role="search">
-            <input class="form-control me-2" placeholder="Search for Products, Brands and More" type="search" aria-label="Search">
+          <form class="d-flex mb-2 me-2" role="search" action="search">
+            <input class="form-control me-2" placeholder="Search for Products, Brands and More" name="query" type="search" aria-label="Search">
+            <button type="submit" class="btn" style="border: 1px solid rgb(158, 158, 158);">Go</button>
           </form>
           <div class="user-icons d-flex mb-2">
             <div class="profile"><i class="bi bi-person"></i></div>
@@ -156,8 +157,8 @@
 <!-- ---------------------------------------img------------------------------------- -->
 
 
-<div class="container-fluid" style="margin-top: 25px; padding: 0;">
-  <img src="{% static 'images/inbetween img1.png' %}" alt="inbetween img1" class="img-fluid w-100">
+<div class="container container-fluid" style="margin-top: 25px; padding: 0;">
+  <img src="{% static 'images/inbetween img1.png' %}" style="border-radius: 25px;" alt="inbetween img1" class="img-fluid w-100">
 </div>
 
 
@@ -194,6 +195,17 @@
   </div>
 </div>
 
+<!-- ---------------------------------------img------------------------------------- -->
+
+
+
+
+<div class="container-fluid" style="margin-top: 25px; padding: 0;">
+  <img src="{% static 'images/perfume_banner.webp' %}" alt="inbetween img1" class="img-fluid w-100">
+</div>
+
+
+
 <!-- ---------------------------------------women------------------------------------- -->
  
 <div class="container">
@@ -224,6 +236,9 @@
     </div>
   </div>
 </div>
+
+
+
 
 
 

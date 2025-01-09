@@ -706,28 +706,91 @@ def order(req, pid):
 
         # Retrieve the product the user is ordering
         product = Product.objects.get(pk=pid)
-
-        # Set default quantity as 1
         qty = 1
         price = product.offer_price
 
-        # Create a new Buy record for the order
         Buy.objects.create(product=product, user=user, qty=qty, price=price, payment=payment, product_id=pid)
 
-        # Redirect to the bookings page after the order is placed
-        return redirect(bookings)  # Use URL name 'bookings' for the redirect (adjust if needed)
+        return redirect(bookings) 
+
 
     # Ensure `product` is available if it's not a POST request (e.g., the initial request)
     if not product:
         product = Product.objects.get(pk=pid)
 
-    # Render the template with the user details and product information
-    return render(req, 'user/buy_address.html', {'detail': detail, 'buy': product})
+    return render(req, 'user/buy_address.html', {'detail': detail, 'product': product})  #detail is used for get and post user details
 
 
 
 
 
+
+
+
+
+def order_cart(req, pid):
+    # Retrieve the logged-in user from session
+    user = User.objects.get(username=req.session['user'])
+
+    # Attempt to get the user's details, handle the case where user details are not found
+    try:
+        detail = User_details.objects.get(user=user)
+    except User_details.DoesNotExist:
+        detail = None
+
+    # Initialize the product variable
+    product = None
+
+    # Handle POST request where user submits order details
+    if req.method == 'POST':
+        address = req.POST['address']
+        number = req.POST['number']
+        pincode = req.POST['zip']
+        state = req.POST['state']
+        country = req.POST['country']
+        payment = req.POST.get('payment_method')
+
+        # Update or create the user's address details
+        if detail:
+            detail.address = address
+            detail.phone = number
+            detail.pincode = pincode
+            detail.state = state
+            detail.country = country
+            detail.save()
+        else:
+            # Create new user details if not found
+            User_details.objects.create(user=user, address=address, phone=number, pincode=pincode, state=state, country=country)
+
+
+
+        cart_items = Cart.objects.filter(user=user)
+
+        # Initialize the total cart price
+        cart_total = 0
+
+        # Process each cart item and create orders
+        for item in cart_items:
+            total_price = item.product.price * item.qty
+            cart_total += total_price
+
+            # Create an entry in the Buy model for each cart item
+            Buy.objects.create(product=item.product,user=user,qty=item.qty,price=total_price,payment=payment)
+
+        # Clear the cart after placing the order
+        cart_items.delete()
+        product = Product.objects.get(pk=pid)
+
+        # Redirect to the bookings page or success page
+        return redirect(bookings)
+    if not product:
+        product = Product.objects.get(pk=pid)
+        buy = Buy.objects.filter(user=pid)
+
+        
+    # If the request method is GET, render the order form or show the cart details
+
+    return render(req, 'user/buy_address.html', {'product': product,'detail': detail,'buy':buy})
 
 
 
@@ -747,17 +810,23 @@ def bookings(req):
 
 
 
+def search(request):
+    query = request.POST.get('query')  # Get the search term from the request
+    products = []
+    if query:
+        products = Product.objects.filter(gender=query)
+        
+    return render(request, 'user/search.html', {'products': products, 'query': query})
+
+
+
+
 # def cancel_booking(req,bid):
 #     data=Buy.objects.get(pk=bid)
 #     data.delete()
 #     return redirect(bookings)   #redirect to bookings page  after cancel booking
 
 
-# def buy_details(req,pid):
-#     buy=Buy.objects.get(pk=pid)
-#     # cat=Category.objects.get(pk=pid)
-#     data=Product.objects.get(pk=pid)
-#     return render(req,'user/buy_address.html',{'buy':buy,'product':data})
 
 
 

@@ -115,15 +115,15 @@
         <form>
             <div class="mb-3">
                 <label for="fullName" class="form-label"><strong>Full Name:</strong></label>
-                <input type="text" class="form-control" id="fullName" value="{{ detail.user.first_name }}">
+                <input type="text" class="form-control" id="fullName" value="{{ detail.user.first_name }}"disabled>
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label"><strong>Email:</strong></label>
-                <input type="email" class="form-control" id="email" value="{{ detail.user }}">
+                <input type="email" class="form-control" id="email" value="{{ detail.user }}"disabled>
             </div>
             <div class="mb-3">
                 <label for="phoneNumber" class="form-label"><strong>Phone Number:</strong></label>
-                <input type="tel" class="form-control" id="phoneNumber" value="{{ detail.phone }}">
+                <input type="tel" class="form-control" id="phoneNumber" value="{{ detail.phone }}"disabled>
             </div>
             <!-- <button type="submit" class="btn btn-primary mt-3">Save Profile</button> -->
         </form>
@@ -136,20 +136,20 @@
         <form>
             <div class="mb-3">
                 <label for="address" class="form-label"><strong>Address:</strong></label>
-                <input type="text" class="form-control" id="address"  value="{{ detail.address }}">
+                <input type="text" class="form-control" id="address"  value="{{ detail.address }}" disabled>
             </div>
 
             <div class="mb-3">
                 <label for="state" class="form-label"><strong>State:</strong></label>
-                <input type="text" class="form-control" id="state"  value="{{ detail.state }}">
+                <input type="text" class="form-control" id="state"  value="{{ detail.state }}"disabled>
             </div>
             <div class="mb-3">
                 <label for="zipCode" class="form-label"><strong>Zip Code:</strong></label>
-                <input type="number" class="form-control" id="zipCode"  value="{{ detail.pincode }}">
+                <input type="number" class="form-control" id="zipCode"  value="{{ detail.pincode }}"disabled>
             </div>
             <div class="mb-3">
                 <label for="country" class="form-label"><strong>Country:</strong></label>
-                <input type="text" class="form-control" id="Country"  value="{{ detail.country }}">
+                <input type="text" class="form-control" id="Country"  value="{{ detail.country }}"disabled>
             </div>
             <!-- <button type="submit" class="btn btn-primary mt-3">Save Address</button> -->
         </form>

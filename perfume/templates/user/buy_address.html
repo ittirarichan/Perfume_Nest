@@ -108,22 +108,36 @@
 
 
         <!-- Product Details -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
-            <div class="product-image rounded-2xl overflow-hidden shadow-lg" style="width: 80%; height: 80%; object-fit: cover;">
-                <img src="{{Product.img.url}}" alt="pro img" class="object-cover">
+        <!-- <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12" style="width: 100%;"> -->
+            <!-- <div class="product-image rounded-2xl overflow-hidden shadow-lg" style="width: 80%; height: 80%; object-fit: cover;">
+                <img src="{{product.img.url}}" alt="pro img" class="object-cover">
             </div>
             
             <div class="space-y-6">
-                <h1 class="text-4xl font-bold text-gray-900">{{ detail.pro_bnd.bnd_name }}</h1>
-                <!-- <p class="text-lg text-gray-600">{{ buy.pro_dis }}</p> -->
+                <h1 class="text-4xl font-bold text-gray-900">{{ product.pro_name }}</h1>
                 <div class="flex items-baseline space-x-4">
                     <span class="text-3xl font-bold text-indigo-600">${{ product.offer_price }}</span>
                     <span class="text-lg text-gray-500 line-through">${{ product.price}}</span>
                     <span id="qty-{{ i.product.id }}">{{ product.qty }}</span>
 
                 </div>
+            </div> -->
+            
+            
+            <div style="justify-items: center; margin-bottom: 25px;">
+            <div class="card" style="width: 20rem;">
+              <img src="{{product.img.url}}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text">${{ product.price}}</p>
+                <!-- <p><strong>Quantity:</strong> {{ buy.qty }}</p> -->
+                <a href="../view_product/{{product.pk}}" class="btn btn-primary">View Product</a>
+              </div>
             </div>
-        </div>
+          </div>
+
+        <!-- </div> -->
+
 
         <!-- Checkout Form -->
         <div class="bg-white rounded-2xl shadow-lg p-8">
@@ -184,17 +198,17 @@
                         
                         <div class="space-y-4">
                             <div class="flex justify-between">
-                                <span class="text-gray-600">{{ detail.pro_bnd.bnd_name }}</span>
-                                <span class="font-medium">${{ pro.offer_price }}</span>
+                                <!-- <span class="text-gray-600">{{ detail.pro_bnd.bnd_name }}</span>
+                                <span class="font-medium">${{ product.price }}</span> -->
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-gray-600">Shipping</span>
-                                <span class="font-medium">$5.00</span>
+                                <!-- <span class="text-gray-600">Shipping</span>
+                                <span class="font-medium">$5.00</span> -->
                             </div>
                             <div class="border-t pt-4">
                                 <div class="flex justify-between">
                                     <span class="text-lg font-medium">Total</span>
-                                    <span class="text-lg font-bold text-indigo-600">${{ pro.offer_price|add:"5.00" }}</span>
+                                    <span class="text-lg font-bold text-indigo-600">${{ product.price }}</span>
                                 </div>
                             </div>
                         </div>
