@@ -78,7 +78,7 @@
               <li><a class="dropdown-item" href="../user_profile">Profile</a></li>
               <li><a class="dropdown-item" href="../booking">Shopping</a></li>
               <li><a class="dropdown-item" href="../view_cart">Cart</a></li>
-              <li><a class="dropdown-item" href="logout">Logout</a></li>
+              <li><a class="dropdown-item" href="../logout">Logout</a></li>
             </ul>
           </div>
         </ul>
@@ -156,7 +156,6 @@
                 name="message" 
                 rows="4" 
                 placeholder="Tell us what you think..."
-                required
             ></textarea>
         </div>
 
@@ -179,7 +178,14 @@
                 <label for="star1" title="1 star">★</label>
             </div>
         </div>
-
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-warning alert-dismissible">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            {{ message }}
+          </div>
+          {% endfor %}
+        {% endif %}
         <button type="submit" class="submit-btn">
             Submit Feedback
         </button>

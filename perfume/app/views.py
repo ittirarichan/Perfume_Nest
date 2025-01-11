@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 
 
 
-#--------------------shop login------------------------
+#--------------------login------------------------
 
 
 def perfume_login(req):
@@ -37,7 +37,7 @@ def perfume_login(req):
         return render(req,'login.html')
 
 
-#--------------------shop logout------------------------
+#--------------------logout------------------------
 
 
 def perfume_shop_logout(req):
@@ -58,7 +58,14 @@ def perfume_shop_logout(req):
 
 
 
-# --------------admin functions starting from here-------------
+#-----------------------------------------------admin functions starting from here----------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
 
 
 #--------------------admin homepage------------------------
@@ -333,7 +340,6 @@ def view_users(req):
 
 
 
-
 # --------------view all users-------------
 
 
@@ -343,15 +349,39 @@ def user_list_view(req):
 
 
 
+
+
+
+
+# --------------View Boookings -------------
+
+
 def view_bookings(req):
     buy=Buy.objects.all()[::-1]
     return render( req,'shop/bookings.html',{'booking':buy})
+
+
+
+
+
+
+
+
+# --------------View feedbacks-------------
 
 
 def view_feedbacks(req):
     feed=Feedback.objects.all()[::-1]
     return render( req,'shop/product_feedbacks.html',{'feed':feed})
 
+
+
+
+
+
+
+
+# --------------Users enquires-------------
 
 
 # def enquire(req):
@@ -361,13 +391,28 @@ def view_feedbacks(req):
 
 
 
+
+
+
+
+
+
 # --------------Manage products-------------------
+
 
 def manage_products(req):
     data=Product.objects.all()
     return render(req,'shop/manage_products.html',{'products':data})
 
 
+
+
+
+
+
+
+
+# ----------------------------------------------------------------------------------------------------------------------------------------
 # ---------------------------------------------------Admin functions ends here------------------------------------------------------------
 
 
@@ -384,6 +429,15 @@ def manage_products(req):
 
 
 # ---------------------------------------------------user functions starting from here------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
 
 #--------------------user reg------------------------
 
@@ -414,17 +468,17 @@ def register(req):
 
 
 def user_home(req):
-    if 'user' in req.session:
-        data1=Carousel.objects.all()[::-1][:3]          #display latest added 8 Carousel
-        categories = Category.objects.all()             #display latest added 8 prodects
-        data2=Product.objects.all()[::-1][:4]           #display latest added 8 prodects
-        data3=Product.objects.filter(gender="MALE")[::-1][:4] #display latest mens added 8 prodects
-        data4=Product.objects.filter(gender="WOMEN")[::-1][:4] #display latest women added 8 prodects
-        data5=Product.objects.filter(gender="UNISEX")[::-1][:4] #display latest unisex added 8 prodects
-        return render (req,'user/user_home.html',{'carousel':data1,'product':data2, 'productmen':data3,'productwomen':data4,
+    # if 'user' in req.session:
+    data1=Carousel.objects.all()[::-1][:3]          #display latest added 8 Carousel
+    categories = Category.objects.all()             #display latest added 8 prodects
+    data2=Product.objects.all()[::-1][:4]           #display latest added 8 prodects
+    data3=Product.objects.filter(gender="MALE")[::-1][:4] #display latest mens added 8 prodects
+    data4=Product.objects.filter(gender="WOMEN")[::-1][:4] #display latest women added 8 prodects
+    data5=Product.objects.filter(gender="UNISEX")[::-1][:4] #display latest unisex added 8 prodects
+    return render (req,'user/user_home.html',{'carousel':data1,'product':data2, 'productmen':data3,'productwomen':data4,
                                                   'productunisex':data5,'categories':categories})
-    else:
-        return redirect(perfume_login)
+    # else:
+    #     return redirect(perfume_login)
     
 
 
@@ -438,10 +492,8 @@ def user_home(req):
 
 
 def shop_page(req):
-        # If no category is selected, show all products
     products = Product.objects.all()
-    categories = Category.objects.all()
-    # Render the shop page with products and categories
+    categories = Category.objects.all()    
     return render(req, 'user/shop.html', {'products': products,'categories': categories})
 
 
@@ -477,10 +529,31 @@ def men_pro(req):
     categories = Category.objects.all()
     return render(req, 'user/men.html', {'product': product,'categories': categories})
 
+
+
+
+
+
+
+
+#--------------------women Products (display all women products in this page)------------------------
+
+
 def women_pro(req):
     product=Product.objects.filter(gender="WOMEN")
     categories = Category.objects.all()
     return render(req, 'user/women.html', {'product': product,'categories': categories})
+
+
+
+
+
+
+
+
+
+#--------------------unisex Products (display all unisex products in this page)------------------------
+
 
 def unisex_pro(req):
     product=Product.objects.filter(gender="UNISEX")
@@ -548,41 +621,88 @@ def user_profile(req):
 
 
 
+
+
+
+
+
+
+
 #--------------------View products (display all the details of the product in this page)------------------------
 
 
-def view_product(req, pid):
-    if 'user' in req.session:
+# def view_product(req, pid):
+#     if 'user' in req.session:
+#         data = Product.objects.get(pk=pid)
+#         # feedback
+#         if req.method == 'POST':
+#             # Get the current logged-in user correctly
+#             user = req.user
 
-        data = Product.objects.get(pk=pid)
-        # feedback
-        if req.method == 'POST':
-            # Get the current logged-in user correctly
+#             message = req.POST.get('message')
+#             rating = req.POST.get('rating')
+
+#             # Create feedback
+#             feedback = Feedback.objects.create(user=user,product=data,message=message,rating=rating)
+#             feedback.save()
+#             # No need for feedback.save() as create() already saves
+
+#             # Optionally add a success message
+#             messages.success(req, 'Thank you for your feedback!')
+#             return redirect(view_product, pid=pid)
+
+        
+#         # Get all feedbacks for this product to display
+#         feedbacks = Feedback.objects.filter(product=data)
+        
+    
+#         return render(req, 'user/view_product.html', {'product': data,'feedbacks': feedbacks })
+#     else:
+#         return redirect(perfume_login)
+    
+
+
+
+
+#--------------------View products (display all the details of the product in this page)------------------------
+#--------------user can view product without login, when try to submit review redirect to login-----------------
+
+def view_product(req, pid):
+    # Get the product details
+    data = Product.objects.get(pk=pid)
+
+    # Check if the form is submitted
+    if req.method == 'POST':
+        if req.user.is_authenticated:
+            # Get the logged-in user
             user = req.user
 
+            # Retrieve feedback details from the form
             message = req.POST.get('message')
             rating = req.POST.get('rating')
 
-            # Create feedback
-            feedback = Feedback.objects.create(user=user,product=data,message=message,rating=rating)
-            feedback.save()
-            # No need for feedback.save() as create() already saves
+            # Create and save the feedback
+            Feedback.objects.create(user=user, product=data, message=message, rating=rating)
 
-            # Optionally add a success message
-            messages.success(req, 'Thank you for your feedback!')
             return redirect(view_product, pid=pid)
+        else:
+            # Add a message prompting login and redirect to login page
+            messages.warning(req, 'Login needed to submit a review.')
+            return redirect(perfume_login)
 
-        
-        # Get all feedbacks for this product to display
-        feedbacks = Feedback.objects.filter(product=data)
-        
-    
-        return render(req, 'user/view_product.html', {'product': data,'feedbacks': feedbacks })
-    else:
-        return redirect(perfume_login)
+    # Fetch all feedback for the product to display on the page
+    feedbacks = Feedback.objects.filter(product=data)
+
+    # Render the product view template
+    return render(req, 'user/view_product.html', {'product': data, 'feedbacks': feedbacks})
 
 
 
+
+
+
+
+#--------------------Add to cart------------------------
 
 
 def add_to_cart(req,pid):
@@ -597,15 +717,38 @@ def add_to_cart(req,pid):
         data.save()
     return redirect(view_cart)
 
+
+
+
+
+
+
+
+
+#--------------------View cart------------------------
+
+
 def view_cart(req):
-    user=User.objects.get(username=req.session['user'])
-    data=Cart.objects.filter(user=user)
-    for item in data:
-        item.total_price = item.product.price * item.qty
-    cart_total = sum(item.total_price for item in data)
+    if 'user' in req.session:
+        user=User.objects.get(username=req.session['user'])
+        data=Cart.objects.filter(user=user)[::-1]
+        for item in data:
+            item.total_price = item.product.price * item.qty
+        cart_total = sum(item.total_price for item in data)
+        return render(req,'user/cart.html',{'cart':data,'cart_total': cart_total})
+    else:
+        return redirect(perfume_login)
+  
 
 
-    return render(req,'user/cart.html',{'cart':data,'cart_total': cart_total})  
+
+
+
+
+
+
+#--------------------Add to cart (incr,decr,remove)------------------------
+
 
 def qty_inc(req,cid):
     data=Cart.objects.get(pk=cid)
@@ -626,48 +769,15 @@ def remove_cart(req,cid):
     data.delete()
     return redirect(view_cart)
 
-# def cart_pro_buy(req,cid):
-#     cart=Cart.objects.get(pk=cid)
-#     product=cart.product
-#     user=cart.user
-#     qty=cart.qty
-#     price=product.offer_price*qty
-#     buy=Buy.objects.create(product=product,user=user,qty=qty,price=price)
-#     buy.save()
-#     # return redirect(bookings)
-#     return render(req,'user/buy_address.html',{'buy':buy})   
 
 
-def pro_buy(req, pid):
-    try:
-        product = Product.objects.get(pk=pid)
-    except Product.DoesNotExist:
-        return render(req, 'error_page.html', {'message': 'Product not found'})
 
-    return render(req, 'user/buy_address.html', {'product': product})
 
-   
 
-# def product_buy(req, cartid):
-#     try:
-#         username = req.session['user']
-#         user = User.objects.get(username=username)
-#     except KeyError:
-#         return redirect('login')  # Redirect to login if the session is missing
-#     except User.DoesNotExist:
-#         return render(req, 'error_page.html', {'message': 'User not found'})
 
-#     try:
-#         product = Product.objects.get(pk=cartid)
-#     except Product.DoesNotExist:
-#         return render(req, 'error_page.html', {'message': 'Product not found'})
 
-#     qty = 1
-#     price = product.offer_price
-#     buy = Buy.objects.create(product=product, user=user, qty=qty, price=price)
-#     buy.save()
 
-#     return render(req, 'user/shopping_history.html', {'bookings': [buy]})
+#--------------------order product from view product page------------------------
 
 
 def order(req, pid):
@@ -726,6 +836,9 @@ def order(req, pid):
 
 
 
+
+
+#--------------------order product from cart page------------------------
 
 
 def order_cart(req, pid):
@@ -795,30 +908,55 @@ def order_cart(req, pid):
 
 
 
+
+
+
+
+
+#--------------------view all bookings------------------------
+
+
 def bookings(req):
-    try:
-        user = User.objects.get(username=req.session['user'])
-    except KeyError:
-        return redirect('login')  # Redirect if session key is missing
-    except User.DoesNotExist:
-        return render(req, 'error_page.html', {'message': 'User not found'})
+    if 'user' in req.session:
+        try:
+            user = User.objects.get(username=req.session['user'])
+        except KeyError:
+            return redirect('login')  # Redirect if session key is missing
+        except User.DoesNotExist:
+            return render(req, 'error_page.html', {'message': 'User not found'})
 
-    # Fetch bookings for the given product ID
-    buy = Buy.objects.filter(user=user).order_by('-id')
-    return render(req, 'user/shopping_history.html', {'bookings': buy})
+        # Fetch bookings for the given product ID
+        buy = Buy.objects.filter(user=user).order_by('-id')
+        return render(req, 'user/shopping_history.html', {'bookings': buy})
+    else:
+        return redirect(perfume_login)
 
 
 
+
+
+
+
+
+
+#--------------------search product------------------------
 
 def search(request):
     query = request.POST.get('query')  # Get the search term from the request
     products = []
     if query:
         products = Product.objects.filter(gender=query)
-        
     return render(request, 'user/search.html', {'products': products, 'query': query})
 
 
+
+
+
+
+
+
+
+#--------------------Cancel booking------------------------
 
 
 # def cancel_booking(req,bid):
@@ -857,3 +995,10 @@ def contact(req):
 def about(req):
     return render(req,'user/about.html')
 
+
+
+
+
+
+
+# I have included the category "categories=Category.objects.all()" in some functions, bcz there's an option to buy category wise in the navbar 
