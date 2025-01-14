@@ -41,19 +41,7 @@ urlpatterns=[
     path('about', views.about),
     path('search', views.search),
 
-
-    # path('cart_pro_buy/<cid>',views.cart_pro_buy),
-    # path('pro_buy/<pid>',views.pro_buy),
-    # path('pay/<pid>', views.payment_methods, name='pay'),
-    # path('buy_details/<int:cat_id>/', views.buy_details),
-
-    # path('search', views.search, name='search'),
-    # path('search_product', views.search_product, name='search_product'),
-    # path('search_category', views.search_category, name='search_category'),
-    # path('search_brand', views.search_brand, name='search_brand'),
-    # path('search_price', views.search_price, name='search_price'),
-
-
-
+    path("payment/", views.order_payment, name="payment"),
+    path("razorpay/callback/", views.callback, name="callback"),
 
 ]

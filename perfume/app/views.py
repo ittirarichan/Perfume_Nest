@@ -6,6 +6,16 @@ import os
 from django.contrib.auth.models import User
 
 
+from django.http import JsonResponse
+from django.conf import settings
+import razorpay
+import json
+from django.views.decorators.csrf import csrf_exempt
+
+
+
+
+
 # Create your views here.
 
 
@@ -492,7 +502,7 @@ def user_home(req):
 
 
 def shop_page(req):
-    products = Product.objects.all()
+    products = Product.objects.all()[::-1]
     categories = Category.objects.all()    
     return render(req, 'user/shop.html', {'products': products,'categories': categories})
 
@@ -821,7 +831,7 @@ def order(req, pid):
 
         Buy.objects.create(product=product, user=user, qty=qty, price=price, payment=payment, product_id=pid)
 
-        return redirect(bookings) 
+        return redirect(callback) 
 
 
     # Ensure `product` is available if it's not a POST request (e.g., the initial request)
@@ -895,7 +905,7 @@ def order_cart(req, pid):
         product = Product.objects.get(pk=pid)
 
         # Redirect to the bookings page or success page
-        return redirect(bookings)
+        return redirect(callback)
     if not product:
         product = Product.objects.get(pk=pid)
         buy = Buy.objects.filter(user=pid)
@@ -996,6 +1006,69 @@ def about(req):
     return render(req,'user/about.html')
 
 
+# -----------------------------------------------payment gateway---------------------------------------------------------------------
+
+def order_payment(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        amount = request.POST.get("amount")
+        client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+        razorpay_order = client.order.create(
+            {"amount": int(amount) * 100, "currency": "INR", "payment_capture": "1"}
+        )
+        order_id=razorpay_order['id']
+        order = Order.objects.create(
+            name=name, amount=amount, provider_order_id=order_id
+        )
+        order.save()
+        return render(
+            request,
+            "index.html",
+            {
+                "callback_url": "http://" + "127.0.0.1:8000" + "razorpay/callback",
+                "razorpay_key": settings.RAZORPAY_KEY_ID,
+                "order": order,
+            },
+        )
+    return render(request, "payment/index.html")
+
+
+@csrf_exempt
+def callback(request):
+    def verify_signature(response_data):
+        client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+        return client.utility.verify_payment_signature(response_data)
+
+    if "razorpay_signature" in request.POST:
+        payment_id = request.POST.get("razorpay_payment_id", "")
+        provider_order_id = request.POST.get("razorpay_order_id", "")
+        signature_id = request.POST.get("razorpay_signature", "")
+        order = Order.objects.get(provider_order_id=provider_order_id)
+        order.payment_id = payment_id
+        order.signature_id = signature_id
+        order.save()
+        if not verify_signature(request.POST):
+            order.status = PaymentStatus.SUCCESS
+            order.save()
+            return render(request, "callback.html", context={"status": order.status})   # callback giving html page
+            #  or  return redirect(function name of callback giving html page)
+        else:
+            order.status = PaymentStatus.FAILURE
+            order.save()
+            return render(request, "callback.html", context={"status": order.status})  # callback giving html page
+            #  or  return redirect(function name of callback giving html page)
+
+    else:
+        payment_id = json.loads(request.POST.get("error[metadata]")).get("payment_id")
+        provider_order_id = json.loads(request.POST.get("error[metadata]")).get(
+            "order_id"
+        )
+        order = Order.objects.get(provider_order_id=provider_order_id)
+        order.payment_id = payment_id
+        order.status = PaymentStatus.FAILURE
+        order.save()
+        return render(request, "callback.html", context={"status": order.status})  # callback giving html page
+        #  or  return redirect(function name of callback giving html page)
 
 
 
