@@ -11,6 +11,9 @@ from django.conf import settings
 import razorpay
 import json
 from django.views.decorators.csrf import csrf_exempt
+from django.core.mail import send_mail
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 
 
 
@@ -394,9 +397,9 @@ def view_feedbacks(req):
 # --------------Users enquires-------------
 
 
-# def enquire(req):
-#     enq=Enquire.objects.all()    
-#     return render(req,'shop/enquire.html' ,{'enquri':enq})
+def enquiry(req):
+    enq=Enquire.objects.all()    
+    return render(req,'shop/enquire.html' ,{'enquri':enq})
 
 
 
@@ -452,20 +455,53 @@ def manage_products(req):
 #--------------------user reg------------------------
 
 
+# def register(req):
+#     if req.method=='POST':
+#         name=req.POST['name']
+#         email=req.POST['email']
+#         pswd=req.POST['password']
+#         try:
+#             validate_email(email)
+
+#             data=User.objects.create_user(first_name=name,email=email,username=email,password=pswd)    
+#             data.save()
+#         except ValidationError:
+#             messages.warning(req, "Invalid email format, please enter a valid email.")
+
+#             messages.warning(req, "Username/email already exist.")
+#             return redirect(register)
+#         return redirect(perfume_login)
+#     else:
+#         return render(req,'user/register.html')
+
+
+
+
 def register(req):
     if req.method=='POST':
         name=req.POST['name']
         email=req.POST['email']
         pswd=req.POST['password']
+        # Validate email
         try:
-            data=User.objects.create_user(first_name=name,email=email,username=email,password=pswd)    
-            data.save()
-        except:
-            messages.warning(req, "Username/email already exist.")
-            return redirect(register)
+            validate_email(email)
+        except ValidationError:
+            messages.warning(req, "Invalid email format, please enter a valid email.")
+            return render(req,'user/register.html')
+
+        # hashed_password = hashlib.sha256(password.encode()).hexdigest()
+        data=User.objects.create_user(first_name=name,email=email,username=email,password=pswd)    
+        data.save()
+        subject = 'Registration details '
+        message = 'Your account username: {}  and password: {}'.format(name,pswd)
+        from_email = settings.EMAIL_HOST_USER
+        recipient_list = [email]
+        send_mail(subject, message, from_email, recipient_list,fail_silently=False)  
         return redirect(perfume_login)
-    else:
-        return render(req,'user/register.html')
+        # except:
+        # messages.warning(req, "Email Already Exits , Try Another Email.")
+    return render(req,'user/register.html')
+
 
 
 
@@ -694,7 +730,7 @@ def view_product(req, pid):
             # Create and save the feedback
             Feedback.objects.create(user=user, product=data, message=message, rating=rating)
 
-            return redirect(view_product, pid=pid)
+            return redirect("view_product", pid=pid)
         else:
             # Add a message prompting login and redirect to login page
             messages.warning(req, 'Login needed to submit a review.')
@@ -831,7 +867,7 @@ def order(req, pid):
 
         Buy.objects.create(product=product, user=user, qty=qty, price=price, payment=payment, product_id=pid)
 
-        return redirect(callback) 
+        return redirect("payment", pid=pid) 
 
 
     # Ensure `product` is available if it's not a POST request (e.g., the initial request)
@@ -885,7 +921,7 @@ def order_cart(req, pid):
             # Create new user details if not found
             User_details.objects.create(user=user, address=address, phone=number, pincode=pincode, state=state, country=country)
 
-
+    
 
         cart_items = Cart.objects.filter(user=user)
 
@@ -905,7 +941,7 @@ def order_cart(req, pid):
         product = Product.objects.get(pk=pid)
 
         # Redirect to the bookings page or success page
-        return redirect(callback)
+        return redirect("payment", pid=pid)
     if not product:
         product = Product.objects.get(pk=pid)
         buy = Buy.objects.filter(user=pid)
@@ -951,13 +987,12 @@ def bookings(req):
 
 #--------------------search product------------------------
 
-def search(request):
-    query = request.POST.get('query')  # Get the search term from the request
-    products = []
-    if query:
-        products = Product.objects.filter(gender=query)
-    return render(request, 'user/search.html', {'products': products, 'query': query})
-
+# def search(request):
+#     query = request.POST.get('query')  # Get the search term from the request
+#     products = []
+#     if query:
+#         products = Product.objects.filter(gender=query)
+#     return render(request, 'user/search.html', {'products': products, 'query': query})
 
 
 
@@ -987,8 +1022,19 @@ def search(request):
 # --------------contact page-------------
 
 
-def contact(req):
-    return render(req,'user/contact.html')
+def contact(request):
+    categories = Category.objects.all()
+    if request.method == "POST":
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        subject = request.POST.get('subject')
+        phone = request.POST.get('phone')
+        message = request.POST.get('message')
+        enquire = Enquire.objects.create(name=name,email=email,subject=subject,Phone=phone,message=message)
+        enquire.save
+        return redirect(contact)
+    else:
+        return render(request,'user/contact.html',{"categories":categories})
 
 
 
@@ -1003,15 +1049,19 @@ def contact(req):
 
 
 def about(req):
-    return render(req,'user/about.html')
+    categories = Category.objects.all()
+    return render(req,'user/about.html',{"categories":categories})
 
 
 # -----------------------------------------------payment gateway---------------------------------------------------------------------
 
-def order_payment(request):
-    if request.method == "POST":
-        name = request.POST.get("name")
-        amount = request.POST.get("amount")
+def order_payment(request,pid):
+    if request.method == "GET":
+        product = Product.objects.get (pk=pid)
+    # if request.method == "POST":
+        name = product.name
+        amount = product.price  # Get price directly from the product
+
         client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
         razorpay_order = client.order.create(
             {"amount": int(amount) * 100, "currency": "INR", "payment_capture": "1"}
@@ -1023,7 +1073,7 @@ def order_payment(request):
         order.save()
         return render(
             request,
-            "index.html",
+            "payment/index.html",
             {
                 "callback_url": "http://" + "127.0.0.1:8000" + "razorpay/callback",
                 "razorpay_key": settings.RAZORPAY_KEY_ID,

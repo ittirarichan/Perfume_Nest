@@ -22,18 +22,17 @@
       
       <nav role='navigation'>
         <ul class="main">
-          <li class=""><a href="">Dashboard</a></li>
-          <li class="edit"><a href="#">Edit Website</a></li>
+          <li class=""><a href="perfume_home">Dashboard</a></li>
+          <!-- <li class="edit"><a href="">Edit Website</a></li> -->
           <!-- <li class="write"><a href="add_product">Add Product</a></li> -->
           <!-- <li class="comments"><a href="#">Ads</a></li> -->
-          <li class="users"><a href="">Edit Images</a></li>
           <li class="users"><a href="view_users">Manage Users</a></li>
           <li class="users"><a href="manage_products">Manage Products</a></li>
           <li class="users"><a href="add_category">Add Category</a></li>
           <li class="users"><a href="add_brand">Add Brand</a></li>
           <li class="users"><a href="view_bookings">Manage Bookings</a></li>
           <li class="users"><a href="view_feedbacks">Product feedbacks</a></li>
-          <li class="users"><a href="">Enquires</a></li>
+          <li class="users"><a href="enquiry">Enquires</a></li>
 
         </ul>
       </nav>
@@ -50,8 +49,7 @@
                         <th>User Name</th>
                         <th>User Email</th>
                         <th>Phone Number</th>
-                        <th>Product</th>
-                        <th>Brand</th>
+                        <th>Subject</th>
                         <th>Enquire</th>
                     </tr>
                 </thead>
@@ -61,17 +59,13 @@
                         <td>{{e.name}}</td>
                         <td>{{ e.email }}</td>
                         <td>{{ e.Phone }}</td>
-                        <td>{{ e.product }}</td>
-                        <td>{{ e.brand }}</td>
-                        <td>{{ e.enq }}</td>
+                        <td>{{ e.subject }}</td>
+                        <td>{{ e.message }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
-
-
-
-        </main>
+      </main>
 </body>
 </html>

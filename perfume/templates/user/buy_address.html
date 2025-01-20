@@ -87,9 +87,9 @@
 
         
         <div class="search-and-icons">
-          <form class="d-flex mb-2 me-2" role="search">
+          <!-- <form class="d-flex mb-2 me-2" role="search">
             <input class="form-control me-2" placeholder="Search for Products, Brands and More" type="search" aria-label="Search">
-          </form>
+          </form> -->
           <div class="user-icons d-flex mb-2">
             <div class="profile"><i class="bi bi-person"></i></div>
             <div class="wishlist"><i class="bi bi-heart"></i></div>
@@ -128,9 +128,9 @@
             <div class="card" style="width: 20rem;">
               <img src="{{product.img.url}}" class="card-img-top" alt="...">
               <div class="card-body">
-                <h5 class="card-title">{{ product.name }}</h5>
-                <p class="card-text">${{ product.price}}</p>
-                <!-- <p><strong>Quantity:</strong> {{ buy.qty }}</p> -->
+                <h5 class="card-title">{{ data.name }}</h5>
+                <p class="card-text">${{ buy.price}}</p>
+                <p><strong>Quantity:</strong> {{ buy.qty }}</p>
                 <a href="../view_product/{{product.pk}}" class="btn btn-primary">View Product</a>
               </div>
             </div>

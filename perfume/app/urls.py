@@ -16,7 +16,7 @@ urlpatterns=[
     path('manage_products',views.manage_products),
     path('delete_category/<int:id>/', views.delete_category, name='delete_category'),
     path('delete_brand/<int:id>/', views.delete_brand, name='delete_brand'),
-    path('view_product/<pid>',views.view_product),
+    path('view_product/<pid>',views.view_product, name='view_product'),
     # path('shop/<pid>',views.shop_page),
     path('shop', views.shop_page, name='shop_page'),
     path('view_bookings',views.view_bookings),
@@ -39,9 +39,10 @@ urlpatterns=[
     path('order_cart/<pid>',views.order_cart),
     path('contact', views.contact),
     path('about', views.about),
-    path('search', views.search),
+    # path('search', views.search),
 
-    path("payment/", views.order_payment, name="payment"),
+    path("payment/<int:pid>/", views.order_payment, name="payment"),
     path("razorpay/callback/", views.callback, name="callback"),
+    path("enquiry", views.enquiry,),
 
 ]
